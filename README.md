@@ -89,7 +89,7 @@ Menghasilkan Query untuk Pelaporan dan Pemantauan Status (Tracking) Membuat peri
 5. catatan_hasil_pemeriksaan VARCHAR (255)
 
 ### Tabel Disposisi
-1.id_disposisi INT
+1. id_disposisi INT
 2. id_dokumen INT
 3. id_user INT
 4. tanggal_disposisi DATETIME
