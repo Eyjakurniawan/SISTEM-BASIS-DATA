@@ -49,36 +49,36 @@ Menghasilkan Query untuk Pelaporan dan Pemantauan Status (Tracking) Membuat peri
 # KEBUTUHAN DATA
 ### Tabel User
 1. id_user INT
-2. nama VARCHAR (100)
+2. nama VARCHAR (50)
 3. email VARCHAR (50)
-4. password VARCHAR (255)
+4. password VARCHAR (50)
 5. role VARCHAR (20)
 
 ### Tabel Mahasiswa
 1. nim VARCHAR (15)
-2. nama_mahasiswa VARCHAR (100)
-3. program_studi VARCHAR (50)
+2. nama_mahasiswa VARCHAR (50)
+3. program_studi VARCHAR (30)
 4. id_user INT
 
 ### Tabel Dosen
 1. nidn VARCHAR (15)
-2. nama_dosen VARCHAR (100)
-3. jabatan VARCHAR (50)
+2. nama_dosen VARCHAR (50)
+3. jabatan VARCHAR (40)
 4. id_user INT
 
 ### Tabel Staf TU
 1. id_pegawai VARCHAR (15)
-2. nama_pegawai VARCHAR (100)
+2. nama_pegawai VARCHAR (50)
 3. id_user INT
 
 ### Tabel Dokumen
 1. id_dokumen INT
-2. nama_berkas VARCHAR (255)
-3. nomor_dokumen VARCHAR (50)
+2. nama_berkas VARCHAR (100)
+3. nomor_dokumen VARCHAR (40)
 4. tanggal_unggah DATETIME
 5. status_dokumen VARCHAR (20)
-6. catatan_penolakan VARCHAR (255)
-7. file_path VARCHAR (255)
+6. catatan_penolakan VARCHAR (200)
+7. file_path VARCHAR (200)
 8. id_user INT
 
 ### Tabel Pemeriksaan
@@ -86,14 +86,14 @@ Menghasilkan Query untuk Pelaporan dan Pemantauan Status (Tracking) Membuat peri
 2. id_dokumen INT
 3. nidn VARCHAR (15)
 4. tanggal_periksa DATETIME
-5. catatan_hasil_pemeriksaan VARCHAR (255)
+5. catatan_hasil_pemeriksaan VARCHAR (200)
 
 ### Tabel Disposisi
 1. id_disposisi INT
 2. id_dokumen INT
 3. id_user INT
 4. tanggal_disposisi DATETIME
-5. isi_instruksi_disposisi VARCHAR (255)
+5. isi_instruksi_disposisi VARCHAR (200)
 
 # DIAGRAM PROSES (FLOWCHART)
 
