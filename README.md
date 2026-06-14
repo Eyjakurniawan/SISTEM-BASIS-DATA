@@ -28,4 +28,9 @@ Menghasilkan Query untuk Pelaporan dan Pemantauan Status (Tracking) Membuat peri
 •	Menampilkan rekapitulasi dokumen yang sedang diperiksa atau didisposisikan oleh Dosen/Dekan.
 •	Menyajikan laporan akhir mengenai jumlah dokumen yang berhasil diselesaikan (status: Selesai) dalam periode tertentu.
 
+# IDENTIFIKASI AKTOR
+1. Mahasiswa: Aktor yang memiliki hak akses untuk mengunggah berkas pengajuan baru atau mengunduh dokumen akademik yang tersedia.
+2. Staf TU: Verifikator awal yang bertugas memproses registrasi berkas masuk, menghapus dokumen, memverifikasi kelayakan berkas, dan memberikan nomor surat resmi jika berkas diterima.
+3. Dosen: Pemeriksa berkas akademis mahasiswa yang menerima notifikasi dokumen masuk serta memberikan status hasil pemeriksaan.
+4. Dekan/Kaprodi: Pimpinan tertinggi yang melakukan peninjauan (review) dokumen akhir serta memberikan catatan instruksi atau lembar disposisi resmi.
 
