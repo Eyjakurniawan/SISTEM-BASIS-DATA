@@ -48,6 +48,7 @@ Menghasilkan Query untuk Pelaporan dan Pemantauan Status (Tracking) Membuat peri
 
 # KEBUTUHAN DATA
 • Tabel User
+
 id_user INT
 nama VARCHAR (100)
 email VARCHAR (50)
