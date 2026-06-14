@@ -54,46 +54,46 @@ Menghasilkan Query untuk Pelaporan dan Pemantauan Status (Tracking) Membuat peri
 4. password VARCHAR (255)
 5. role VARCHAR (20)
 
-• Tabel Mahasiswa
-nim VARCHAR (15)
-nama_mahasiswa VARCHAR (100)
-program_studi VARCHAR (50)
-id_user INT
+### Tabel Mahasiswa
+1. nim VARCHAR (15)
+2. nama_mahasiswa VARCHAR (100)
+3. program_studi VARCHAR (50)
+4. id_user INT
 
-• Tabel Dosen
-nidn VARCHAR (15)
-nama_dosen VARCHAR (100)
-jabatan VARCHAR (50)
-id_user INT
+### Tabel Dosen
+1. nidn VARCHAR (15)
+2. nama_dosen VARCHAR (100)
+3. jabatan VARCHAR (50)
+4. id_user INT
 
-• Tabel Staf TU
-id_pegawai VARCHAR (15)
-nama_pegawai VARCHAR (100)
-id_user INT
+### Tabel Staf TU
+1. id_pegawai VARCHAR (15)
+2. nama_pegawai VARCHAR (100)
+3. id_user INT
 
-• Tabel Dokumen
-id_dokumen INT
-nama_berkas VARCHAR (255)
-nomor_dokumen VARCHAR (50)
-tanggal_unggah DATETIME
-status_dokumen VARCHAR (20)
-catatan_penolakan VARCHAR (255)
-file_path VARCHAR (255)
-id_user INT
+### Tabel Dokumen
+1. id_dokumen INT
+2. nama_berkas VARCHAR (255)
+3. nomor_dokumen VARCHAR (50)
+4. tanggal_unggah DATETIME
+5. status_dokumen VARCHAR (20)
+6. catatan_penolakan VARCHAR (255)
+7. file_path VARCHAR (255)
+8. id_user INT
 
-• Tabel Pemeriksaan
-id_periksa INT
-id_dokumen INT
-nidn VARCHAR (15)
-tanggal_periksa DATETIME
-catatan_hasil_pemeriksaan VARCHAR (255)
+### Tabel Pemeriksaan
+1. id_periksa INT
+2. id_dokumen INT
+3. nidn VARCHAR (15)
+4. tanggal_periksa DATETIME
+5. catatan_hasil_pemeriksaan VARCHAR (255)
 
-• Tabel Disposisi
-id_disposisi INT
-id_dokumen INT
-id_user INT
-tanggal_disposisi DATETIME
-isi_instruksi_disposisi VARCHAR (255)
+### Tabel Disposisi
+1.id_disposisi INT
+2. id_dokumen INT
+3. id_user INT
+4. tanggal_disposisi DATETIME
+5. isi_instruksi_disposisi VARCHAR (255)
 
 
 
