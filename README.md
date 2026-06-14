@@ -95,6 +95,15 @@ Menghasilkan Query untuk Pelaporan dan Pemantauan Status (Tracking) Membuat peri
 4. tanggal_disposisi DATETIME
 5. isi_instruksi_disposisi VARCHAR (255)
 
+# DIAGRAM PROSES (FLOWCHART)
+
+# PEMBAGIAN TUGAS SETIAP ANGGOTA
+1. Naufal (2501020108) = Bertugas dalam membuat studi kasus, latar belakang, serta tujuan sistem.
+2. Yazira Sartika (2501020103) = Bertugas dalam membuat identifikasi aktor dan kebutuhan fungsional.
+3. Raihan (2501020104) = Bertugas dalam membuat rancangan kebutuhan data.
+4. Eyja Kurniawan (2501020094) = Bertugas dalam membuat diagram proses atau flowchart.
+
+# LINK REPOSITORY GITHUB
 
 
 
