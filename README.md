@@ -19,3 +19,13 @@ Sistem penyimpanan yang belum terpusat ini menimbulkan beberapa masalah utama:
 •	Proses disposisi terhambat: Alur instruksi dari Ketua Prodi ke dosen terkait surat masuk seringkali lambat karena harus dilakukan secara manual atau lewat pesan teks biasa yang tertumpuk. 
 Oleh karena itu, diperlukan sebuah perancangan basis data yang terstruktur untuk membangun Sistem Manajemen Arsip Surat dan Dokumen Digital. Sistem ini diharapkan mampu mengintegrasikan seluruh data arsip, mempermudah pencarian, serta menjaga keamanan data dokumen penting di lingkungan program studi.
 
+## Tujuan Sistem
+Membuat rancangan basis data yang mampu mengintegrasikan data aktor utama (Mahasiswa, Staf TU, Dosen, dan Dekan/Kaprodi) beserta hak aksesnya masing-masing dalam sistem manajemen dokumen.
+Mengotomatisasi Pencatatan Siklus Hidup Dokumen Membangun struktur tabel yang dapat merekam setiap perubahan status dokumen secara kronologis, mulai dari dokumen pertama kali diunggah (upload), diverifikasi oleh TU, diperiksa oleh Dosen, hingga diberi disposisi oleh Dekan/Kaprodi.
+Mendukung Alur Kerja Pemeriksaan dan Disposisi Berjenjang Merancang relasi antar-tabel yang mampu mencatat data hasil pemeriksaan oleh Dosen serta lembar disposisi dari Dekan/Kaprodi, sehingga rekam jejak keputusan pimpinan terhadap dokumen tersebut tersimpan dengan baik.
+Menghasilkan Query untuk Pelaporan dan Pemantauan Status (Tracking) Membuat perintah SQL (Query) spesifik untuk menghasilkan laporan operasional yang dibutuhkan pihak kampus, seperti:
+•	Menampilkan daftar dokumen mahasiswa yang masih tertunda (pending) di meja Staf TU.
+•	Menampilkan rekapitulasi dokumen yang sedang diperiksa atau didisposisikan oleh Dosen/Dekan.
+•	Menyajikan laporan akhir mengenai jumlah dokumen yang berhasil diselesaikan (status: Selesai) dalam periode tertentu.
+
+
