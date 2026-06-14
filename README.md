@@ -8,16 +8,16 @@
 ## Naufal Putra Azjril (2501020108)
 
 # STUDI KASUS
-Sistem Manajemen Arsip Surat dan Dokumen Digital merupakan sistem berbasis basis data yang dirancang untuk membantu pengelolaan tata kelola persuratan serta arsip dokumen akademik di lingkungan Program Studi Teknik Informatika secara digital dan otomatis. Sistem ini digunakan untuk mencatat aktivitas sirkulasi dokumen mulai dari pengajuan berkas, proses verifikasi, pemeriksaan, hingga disposisi pimpinan secara real-time. Sistem ini melibatkan beberapa pengguna seperti mahasiswa, staf tata usaha (TU), dosen, dan dekan/kaprodi. Setiap dokumen yang masuk ke dalam sistem akan dicatat ke dalam basis data sehingga informasi status berkas dapat dikelola dengan lebih teratur dan mudah dilacak. Dengan adanya sistem ini, proses disposisi dan pencarian arsip menjadi lebih cepat, akurat, aman, dan mengurangi ketergantungan terhadap pencatatan fisik secara manual.
+Sistem Manajemen Arsip Surat dan Dokumen Digital merupakan sistem berbasis basis data yang dirancang untuk mengubah cara pengelolaan surat dan dokumen di Prodi Teknik Informatika yang tadinya serba manual/kertas menjadi serba digital dan otomatis menggunakan basis data (database). Jadi, mulai dari mahasiswa yang mau upload berkas, staf TU yang meriksa dan kasih nomor surat, dosen yang ngecek, sampai Kaprodi atau Dekan yang ngasih instruksi disposisi, semuanya tercatat langsung di dalam sistem secara real-time. Dengan sistem ini, berkas jadi lebih rapi, aman dari risiko hilang, dan kalau mau cari dokumen lama tinggal ketik aja tanpa perlu bongkar-bongkar lemari arsip lagi.
 
 # LATAR BELAKANG DAN TUJUAN SISTEM
 ## Latar Belakang
-Program Studi Teknik Informatika setiap harinya menerima dan mengeluarkan berbagai macam surat serta dokumen akademik, seperti Surat Keputusan (SK) Dosen, surat pengantar penelitian mahasiswa, berkas proposal, hingga draf skripsi final. Namun, saat ini proses pencatatan dan pengarsipan dokumen-dokumen tersebut masih dilakukan secara manual menggunakan buku besar atau disimpan secara terpisah-pisah di Google Drive pribadi milik staf. 
+Setiap harinya, Program Studi Teknik Informatika menerima dan mengeluarkan berbagai macam surat serta dokumen akademik, seperti Surat Keputusan (SK) Dosen, surat pengantar penelitian mahasiswa, berkas proposal, hingga draf skripsi final. Namun, saat ini proses pencatatan dan pengarsipan dokumen-dokumen tersebut masih dilakukan secara manual menggunakan buku besar atau disimpan secara terpisah di Google Drive pribadi milik staf. 
 Sistem penyimpanan yang belum terpusat ini menimbulkan beberapa masalah utama: 
-•	Pencarian data lambat: Staf Tata Usaha (TU) membutuhkan waktu lama untuk mencari kembali dokumen fisik atau file digital yang terselip. 
-•	Risiko data hilang: Surat fisik rawan rusak atau hilang, dan file digital di drive pribadi berisiko terhapus. 
-•	Proses disposisi terhambat: Alur instruksi dari Ketua Prodi ke dosen terkait surat masuk seringkali lambat karena harus dilakukan secara manual atau lewat pesan teks biasa yang tertumpuk. 
-Oleh karena itu, diperlukan sebuah perancangan basis data yang terstruktur untuk membangun Sistem Manajemen Arsip Surat dan Dokumen Digital. Sistem ini diharapkan mampu mengintegrasikan seluruh data arsip, mempermudah pencarian, serta menjaga keamanan data dokumen penting di lingkungan program studi.
+* Pencarian data lambat: Staf Tata Usaha (TU) membutuhkan waktu lama untuk mencari kembali dokumen fisik atau file digital yang terselip. 
+* Risiko data hilang: Surat fisik rawan rusak atau hilang, dan file digital di drive pribadi berisiko terhapus. 
+* Proses disposisi terhambat: Alur instruksi dari Ketua Prodi ke dosen terkait surat masuk seringkali lambat karena harus dilakukan secara manual atau melalui pesan teks biasa yang mudah tertumpuk. 
+Oleh karena itu, diperlukan perancangan basis data yang terstruktur untuk membangun sistem manajemen arsip yang mampu mengintegrasikan seluruh data, mempermudah pencarian, serta menjaga keamanan dokumen penting di lingkungan program studi.
 
 ## Tujuan Sistem
 Membuat rancangan basis data yang mampu mengintegrasikan data aktor utama (Mahasiswa, Staf TU, Dosen, dan Dekan/Kaprodi) beserta hak aksesnya masing-masing dalam sistem manajemen dokumen.
@@ -29,8 +29,20 @@ Menghasilkan Query untuk Pelaporan dan Pemantauan Status (Tracking) Membuat peri
 •	Menyajikan laporan akhir mengenai jumlah dokumen yang berhasil diselesaikan (status: Selesai) dalam periode tertentu.
 
 # IDENTIFIKASI AKTOR
-1. Mahasiswa: Aktor yang memiliki hak akses untuk mengunggah berkas pengajuan baru atau mengunduh dokumen akademik yang tersedia.
-2. Staf TU: Verifikator awal yang bertugas memproses registrasi berkas masuk, menghapus dokumen, memverifikasi kelayakan berkas, dan memberikan nomor surat resmi jika berkas diterima.
-3. Dosen: Pemeriksa berkas akademis mahasiswa yang menerima notifikasi dokumen masuk serta memberikan status hasil pemeriksaan.
-4. Dekan/Kaprodi: Pimpinan tertinggi yang melakukan peninjauan (review) dokumen akhir serta memberikan catatan instruksi atau lembar disposisi resmi.
+1. Mahasiswa: Pengguna yang memiliki hak akses untuk mengunggah berkas pengajuan baru serta mengunduh dokumen akademik hasil validasi.
+2. Staf TU: Verifikator awal yang bertugas memproses registrasi berkas masuk, menghapus dokumen yang salah input, memverifikasi kelayakan berkas, dan menginput nomor surat resmi jika berkas disetujui.
+3. Dosen: Pemeriksa berkas akademis yang menerima notifikasi dokumen dari staf TU serta memberikan pembaruan status hasil pemeriksaan berkas.
+4. Dekan / Kaprodi: Pimpinan tertinggi yang bertugas meninjau dokumen akhir serta memberikan catatan instruksi atau lembar disposisi resmi di dalam sistem.
+
+# KEBUTUHAN FUNGSIONAL
+1. Sistem harus dapat menyimpan data autentikasi login (username dan password) untuk Mahasiswa, Staf TU, Dosen, dan Dekan/Kaprodi.
+2. Sistem harus dapat mencatat riwayat pengajuan dokumen yang diunggah oleh Mahasiswa beserta waktu unggahnya.
+3. Sistem harus dapat memfasilitasi Staf TU untuk melakukan pencatatan nomor dokumen resmi pada berkas yang telah dinyatakan valid.
+4. Sistem harus dapat menyimpan alasan penolakan berkas di dalam database apabila Staf TU mengubah status dokumen menjadi "Ditolak".
+5. Sistem harus dapat memperbarui status dokumen secara dinamis (Pending, Diterima, Ditolak, Disetujui) di dalam tabel terkait.
+6. Sistem harus dapat mencatat pengiriman notifikasi berkas masuk secara otomatis dari Staf TU ke Dosen Pemeriksa.
+7. Sistem harus dapat menyimpan data hasil penilaian, komentar, atau catatan pemeriksaan dokumen yang dilakukan oleh Dosen.
+8. Sistem harus dapat mencatat lembar disposisi dari Dekan/Kaprodi yang berisi instruksi kelanjutan berkas.
+9. Sistem harus dapat menampilkan laporan operasional berupa jumlah berkas selesai dan berkas tertunda berdasarkan filter rentang tanggal tertentu melalui query SQL.
+10. Sistem harus dapat membatasi hak akses unduh berkas agar dokumen internal prodi hanya bisa diakses oleh aktor yang berwenang.
 
