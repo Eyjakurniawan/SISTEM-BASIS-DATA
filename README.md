@@ -47,13 +47,12 @@ Menghasilkan Query untuk Pelaporan dan Pemantauan Status (Tracking) Membuat peri
 10. Sistem harus dapat membatasi hak akses unduh berkas agar dokumen internal prodi hanya bisa diakses oleh aktor yang berwenang.
 
 # KEBUTUHAN DATA
-• Tabel User
-
-id_user INT
-nama VARCHAR (100)
-email VARCHAR (50)
-password VARCHAR (255)
-role VARCHAR (20)
+### Tabel User
+1. id_user INT
+2. nama VARCHAR (100)
+3. email VARCHAR (50)
+4. password VARCHAR (255)
+5. role VARCHAR (20)
 
 • Tabel Mahasiswa
 nim VARCHAR (15)
