@@ -96,6 +96,8 @@ Menghasilkan Query untuk Pelaporan dan Pemantauan Status (Tracking) Membuat peri
 5. isi_instruksi_disposisi VARCHAR (200)
 
 # DIAGRAM PROSES (FLOWCHART)
+<img width="1041" height="2018" alt="Mentahan Flowchart SBD Revisi" src="https://github.com/user-attachments/assets/99dc035f-e762-47a3-a646-67eba210f7bf" />
+
 
 # PEMBAGIAN TUGAS SETIAP ANGGOTA
 1. Naufal (2501020108) = Bertugas dalam membuat studi kasus, latar belakang, serta tujuan sistem.
@@ -104,6 +106,6 @@ Menghasilkan Query untuk Pelaporan dan Pemantauan Status (Tracking) Membuat peri
 4. Eyja Kurniawan (2501020094) = Bertugas dalam membuat diagram proses atau flowchart.
 
 # LINK REPOSITORY GITHUB
-
+https://github.com/Eyjakurniawan/SISTEM-BASIS-DATA.git
 
 
