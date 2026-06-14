@@ -1,6 +1,5 @@
 # Sistem Manajemen Arsip Surat dan Dokumen Digital
-
-## Proyek implementasi basis data relasional untuk Sistem Manajemen Arsip Surat dan Dokumen Digital guna mengotomatisasi pencatatan surat, digitalisasi berkas akademik, serta pelacakan verifikasi dan disposisi.
+### Proyek implementasi basis data relasional untuk Sistem Manajemen Arsip Surat dan Dokumen Digital guna mengotomatisasi pencatatan surat, digitalisasi berkas akademik, serta pelacakan verifikasi dan disposisi.
 
 # NAMA ANGGOTA KELOMPOK 7
 ## Eyja Kurniawan (2501020094)
