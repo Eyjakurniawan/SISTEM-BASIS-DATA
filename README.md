@@ -46,3 +46,47 @@ Menghasilkan Query untuk Pelaporan dan Pemantauan Status (Tracking) Membuat peri
 9. Sistem harus dapat menampilkan laporan operasional berupa jumlah berkas selesai dan berkas tertunda berdasarkan filter rentang tanggal tertentu melalui query SQL.
 10. Sistem harus dapat membatasi hak akses unduh berkas agar dokumen internal prodi hanya bisa diakses oleh aktor yang berwenang.
 
+# KEBUTUHAN DATA
+• Tabel User
+id_user INT
+nama VARCHAR (100)
+email VARCHAR (50)
+password VARCHAR (255)
+role VARCHAR (20)
+• Tabel Mahasiswa
+nim VARCHAR (15)
+nama_mahasiswa VARCHAR (100)
+program_studi VARCHAR (50)
+id_user INT
+• Tabel Dosen
+nidn VARCHAR (15)
+nama_dosen VARCHAR (100)
+jabatan VARCHAR (50)
+id_user INT
+• Tabel Staf TU
+id_pegawai VARCHAR (15)
+nama_pegawai VARCHAR (100)
+id_user INT
+• Tabel Dokumen
+id_dokumen INT
+nama_berkas VARCHAR (255)
+nomor_dokumen VARCHAR (50)
+tanggal_unggah DATETIME
+status_dokumen VARCHAR (20)
+catatan_penolakan VARCHAR (255)
+file_path VARCHAR (255)
+id_user INT
+• Tabel Pemeriksaan
+id_periksa INT
+id_dokumen INT
+nidn VARCHAR (15)
+tanggal_periksa DATETIME
+catatan_hasil_pemeriksaan VARCHAR (255)
+• Tabel Disposisi
+id_disposisi INT
+id_dokumen INT
+id_user INT
+tanggal_disposisi DATETIME
+isi_instruksi_disposisi VARCHAR (255)
+
+
