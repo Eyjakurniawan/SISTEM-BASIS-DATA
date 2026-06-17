@@ -55,45 +55,45 @@ Menghasilkan Query untuk Pelaporan dan Pemantauan Status (Tracking) Membuat peri
 * `role` VARCHAR (20)
 
 ### Tabel Mahasiswa
-1. nim VARCHAR (15)
-2. nama_mahasiswa VARCHAR (50)
-3. program_studi VARCHAR (30)
-4. id_user INT
+* `nim` VARCHAR (15)
+* `nama_mahasiswa` VARCHAR (50)
+* `program_studi` VARCHAR (30)
+* `id_user` INT
 
 ### Tabel Dosen
-1. nidn VARCHAR (15)
-2. nama_dosen VARCHAR (50)
-3. jabatan VARCHAR (40)
-4. id_user INT
+* `nidn` VARCHAR (15)
+* `nama_dosen` VARCHAR (50)
+* `jabatan` VARCHAR (40)
+* `id_user` INT
 
 ### Tabel Staf TU
-1. id_pegawai VARCHAR (15)
-2. nama_pegawai VARCHAR (50)
-3. id_user INT
+* `id_pegawai` VARCHAR (15)
+* `nama_pegawai` VARCHAR (50)
+* `id_user` INT
 
 ### Tabel Dokumen
-1. id_dokumen INT
-2. nama_berkas VARCHAR (100)
-3. nomor_dokumen VARCHAR (40)
-4. tanggal_unggah DATETIME
-5. status_dokumen VARCHAR (20)
-6. catatan_penolakan VARCHAR (200)
-7. file_path VARCHAR (200)
-8. id_user INT
+* `id_dokumen` INT
+* `nama_berkas` VARCHAR (100)
+* `nomor_dokumen` VARCHAR (40)
+* `tanggal_unggah` DATETIME
+* `status_dokumen` VARCHAR (20)
+* `catatan_penolakan` VARCHAR (200)
+* `file_path` VARCHAR (200)
+* `id_user` INT
 
 ### Tabel Pemeriksaan
-1. id_periksa INT
-2. id_dokumen INT
-3. nidn VARCHAR (15)
-4. tanggal_periksa DATETIME
-5. catatan_hasil_pemeriksaan VARCHAR (200)
+* `id_periksa` INT
+* `id_dokumen` INT
+* `nidn` VARCHAR (15)
+* `tanggal_periksa` DATETIME
+* `catatan_hasil_pemeriksaan` VARCHAR (200)
 
 ### Tabel Disposisi
-1. id_disposisi INT
-2. id_dokumen INT
-3. id_user INT
-4. tanggal_disposisi DATETIME
-5. isi_instruksi_disposisi VARCHAR (200)
+* `id_disposisi` INT
+* `id_dokumen` INT
+* `id_user` INT
+* `tanggal_disposisi` DATETIME
+* `isi_instruksi_disposisi` VARCHAR (200)
 
 # DIAGRAM PROSES (FLOWCHART)
 <img width="1041" height="2018" alt="Mentahan Flowchart SBD Revisi" src="https://github.com/user-attachments/assets/99dc035f-e762-47a3-a646-67eba210f7bf" />
@@ -108,8 +108,13 @@ Menghasilkan Query untuk Pelaporan dan Pemantauan Status (Tracking) Membuat peri
 # LINK REPOSITORY GITHUB
 https://github.com/Eyjakurniawan/SISTEM-BASIS-DATA.git
 
+## 8. LINK REPOSITORY GITHUB
+https://github.com/Eyjakurniawan/SISTEM-BASIS-DATA
 
-# PROGRESS 2
+---
+
+# PROGRESS 2: PERANCANGAN BASIS DATA
+
 ## Kamus Data (Data Dictionary)
 Kamus data ini menjelaskan secara detail mengenai tipe data, panjang karakter, serta fungsi dari setiap kolom yang digunakan pada rancangan basis data:
 
@@ -118,7 +123,7 @@ Kamus data ini menjelaskan secara detail mengenai tipe data, panjang karakter, s
 * `nama` (VARCHAR, 50): Menyimpan nama lengkap pengguna saat mendaftaran akun (maksimal 50 karakter).
 * `email` (VARCHAR, 50): Menyimpan alamat email pengguna sebagai identitas unik untuk login.
 * `password` (VARCHAR, 50): Menyimpan kata sandi akun pengguna untuk keamanan login.
-* `role` (VARCHAR, 20): Menentukan peran atau hak akses pengguna di dalam sistem (Mahasiswa / Staf TU / Dosen / Pimpinan).
+* `role` (VARCHAR, 20): Menentukan peran atau hak akses pengguna di dalam sistem (Mahasiswa / Staf TU / Dosen / Dekan atau Kaprodi).
 
 ### 2. Tabel Mahasiswa
 * `nim` (VARCHAR, 15): Kunci utama (Primary Key) berupa Nomor Induk Mahasiswa.
