@@ -48,7 +48,7 @@ Menghasilkan Query untuk Pelaporan dan Pemantauan Status (Tracking) Membuat peri
 
 # KEBUTUHAN DATA
 ### Tabel User
-1. id_user INT
+* 'id_user' INT
 2. nama VARCHAR (50)
 3. email VARCHAR (50)
 4. password VARCHAR (50)
@@ -139,7 +139,7 @@ Kamus data ini menjelaskan secara detail mengenai tipe data, panjang karakter, s
 
 ### 5. Tabel Dokumen
 * `id_dokumen` (INT): Kunci utama (Primary Key) untuk mengidentifikasi setiap berkas dokumen secara unik.
-* `nama_berkas` (VARCHAR, 100): Menyimpan nama asli file yang diunggah ke dalam sistem.
+* `nama_berkas` (VARCHAR, 100): Menyimpan nama asli file yang diunggah ke dalam sistem. 
 * `nomor_dokumen` (VARCHAR, 40): Menyimpan nomor surat resmi yang diterbitkan dan diinput oleh prodi/staf TU.
 * `tanggal_unggah` (DATETIME): Mencatat waktu dan tanggal tepat saat dokumen diunggah oleh mahasiswa.
 * `status_dokumen` (VARCHAR, 20): Melacak status berkas secara dinamis (Pending / Diterima / Ditolak / Selesai).
