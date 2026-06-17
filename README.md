@@ -114,7 +114,7 @@ https://github.com/Eyjakurniawan/SISTEM-BASIS-DATA.git
 
 ## Penjelasan Entitas dan Relasi 
 
-### 1. Entitas (Entities)
+### 1. Entitas
 Dalam konteks sistem ini, entitas dapat dibagi menjadi Aktor (User) dan Objek (Data/Dokumen):
 
 Mahasiswa: Pengguna sistem yang bertindak sebagai pemohon (yang mengunggah dokumen) atau konsumen (yang mengunduh dokumen).
@@ -125,7 +125,7 @@ Dosen (termasuk Dekan/Kaprodi): Pengguna sistem tingkat atas yang bertanggung ja
 
 Dokumen / Surat: Objek utama yang mengalir di dalam sistem. Dokumen ini memiliki siklus hidup yang berubah statusnya (diunggah, diverifikasi, diberi nomor, diperiksa, didisposisi, disetujui, hingga selesai/pending).
 
-### 2. Relasi dan Alur Proses (Relations & Process Flow)
+### 2. Relasi 
 Relasi di dalam flowchart ini digambarkan melalui garis alur aktivitas yang menghubungkan para aktor dengan dokumen. Berikut adalah rincian relasinya berdasarkan peran:
 
 A. Alur Relasi Mahasiswa
