@@ -108,6 +108,56 @@ Menghasilkan Query untuk Pelaporan dan Pemantauan Status (Tracking) Membuat peri
 # LINK REPOSITORY GITHUB
 https://github.com/Eyjakurniawan/SISTEM-BASIS-DATA.git
 
-# PROGRESS 2
 
+# PROGRESS 2
+## Kamus Data (Data Dictionary)
+Kamus data ini menjelaskan secara detail mengenai tipe data, panjang karakter, serta fungsi dari setiap kolom yang digunakan pada rancangan basis data:
+
+### 1. Tabel User
+* `id_user` (INT): Kunci utama (Primary Key) untuk mengidentifikasi setiap akun pengguna secara unik.
+* `nama` (VARCHAR, 50): Menyimpan nama lengkap pengguna saat mendaftaran akun (maksimal 50 karakter).
+* `email` (VARCHAR, 50): Menyimpan alamat email pengguna sebagai identitas unik untuk login.
+* `password` (VARCHAR, 50): Menyimpan kata sandi akun pengguna untuk keamanan login.
+* `role` (VARCHAR, 20): Menentukan peran atau hak akses pengguna di dalam sistem (Mahasiswa / Staf TU / Dosen / Pimpinan).
+
+### 2. Tabel Mahasiswa
+* `nim` (VARCHAR, 15): Kunci utama (Primary Key) berupa Nomor Induk Mahasiswa.
+* `nama_mahasiswa` (VARCHAR, 50): Menyimpan nama lengkap mahasiswa (maksimal 50 karakter).
+* `program_studi` (VARCHAR, 30): Menyimpan nama program studi atau jurusan mahasiswa.
+* `id_user` (INT): Kunci tamu (Foreign Key) yang menghubungkan profil mahasiswa ke akun loginnya di tabel User.
+
+### 3. Tabel Dosen
+* `nidn` (VARCHAR, 15): Kunci utama (Primary Key) berupa Nomor Induk Dosen Nasional.
+* `nama_dosen` (VARCHAR, 50): Menyimpan nama lengkap dosen beserta gelar (maksimal 50 karakter).
+* `jabatan` (VARCHAR, 40): Menyimpan jabatan struktural atau fungsional dosen (misal: Dosen, Kaprodi, Dekan).
+* `id_user` (INT): Kunci tamu (Foreign Key) yang menghubungkan profil dosen ke akun loginnya di tabel User.
+
+### 4. Tabel Staf TU
+* `id_pegawai` (VARCHAR, 15): Kunci utama (Primary Key) berupa nomor induk pegawai staf TU.
+* `nama_pegawai` (VARCHAR, 50): Menyimpan nama lengkap staf TU (maksimal 50 karakter).
+* `id_user` (INT): Kunci tamu (Foreign Key) yang menghubungkan profil staf ke akun loginnya di tabel User.
+
+### 5. Tabel Dokumen
+* `id_dokumen` (INT): Kunci utama (Primary Key) untuk mengidentifikasi setiap berkas dokumen secara unik.
+* `nama_berkas` (VARCHAR, 100): Menyimpan nama asli file yang diunggah ke dalam sistem.
+* `nomor_dokumen` (VARCHAR, 40): Menyimpan nomor surat resmi yang diterbitkan dan diinput oleh prodi/staf TU.
+* `tanggal_unggah` (DATETIME): Mencatat waktu dan tanggal tepat saat dokumen diunggah oleh mahasiswa.
+* `status_dokumen` (VARCHAR, 20): Melacak status berkas secara dinamis (Pending / Diterima / Ditolak / Selesai).
+* `catatan_penolakan` (VARCHAR, 200): Menyimpan teks alasan penolakan jika berkas tidak lolos verifikasi awal oleh staf TU.
+* `file_path` (VARCHAR, 200): Menyimpan teks alamat tautan atau link lokasi folder penyimpanan file digital.
+* `id_user` (INT): Kunci tamu (Foreign Key) untuk mencatat akun pengguna mana yang mengunggah dokumen tersebut.
+
+### 6. Tabel Pemeriksaan
+* `id_periksa` (INT): Kunci utama (Primary Key) untuk setiap baris aktivitas peninjauan berkas.
+* `id_dokumen` (INT): Kunci tamu (Foreign Key) untuk merujuk ke dokumen mana yang sedang diperiksa.
+* `nidn` (VARCHAR, 15): Kunci tamu (Foreign Key) untuk mencatat dosen mana yang melakukan pemeriksaan berkas.
+* `tanggal_periksa` (DATETIME): Mencatat waktu pelaksanaan pemeriksaan berkas oleh dosen.
+* `catatan_hasil_pemeriksaan` (VARCHAR, 200): Menyimpan teks hasil evaluasi, masukan, atau koreksi dari dosen pemeriksa.
+
+### 7. Tabel Disposisi
+* `id_disposisi` (INT): Kunci utama (Primary Key) untuk setiap lembar instruksi resmi pimpinan.
+* `id_dokumen` (INT): Kunci tamu (Foreign Key) untuk merujuk pada surat masuk yang membutuhkan disposisi.
+* `id_user` (INT): Kunci tamu (Foreign Key) untuk mencatat akun pimpinan (Dekan/Kaprodi) yang mengeluarkan perintah disposisi.
+* `tanggal_disposisi` (DATETIME): Mencatat tanggal ketika instruksi disposisi resmi dikeluarkan.
+* `isi_instruksi_disposisi` (VARCHAR, 200): Menyimpan teks detail perintah atau disposisi dari pimpinan untuk ditindaklanjuti.
 
