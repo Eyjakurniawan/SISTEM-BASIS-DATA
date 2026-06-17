@@ -48,11 +48,11 @@ Menghasilkan Query untuk Pelaporan dan Pemantauan Status (Tracking) Membuat peri
 
 # KEBUTUHAN DATA
 ### Tabel User
-* 'id_user' INT
-2. nama VARCHAR (50)
-3. email VARCHAR (50)
-4. password VARCHAR (50)
-5. role VARCHAR (20)
+* `id_user` INT
+* `nama` VARCHAR (50)
+* `email` VARCHAR (50)
+* `password` VARCHAR (50)
+* `role` VARCHAR (20)
 
 ### Tabel Mahasiswa
 1. nim VARCHAR (15)
