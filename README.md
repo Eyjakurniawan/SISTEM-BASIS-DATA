@@ -108,9 +108,6 @@ Menghasilkan Query untuk Pelaporan dan Pemantauan Status (Tracking) Membuat peri
 # LINK REPOSITORY GITHUB
 https://github.com/Eyjakurniawan/SISTEM-BASIS-DATA.git
 
-## 8. LINK REPOSITORY GITHUB
-https://github.com/Eyjakurniawan/SISTEM-BASIS-DATA
-
 ---
 
 # PROGRESS 2: PERANCANGAN BASIS DATA
