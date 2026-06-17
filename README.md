@@ -112,6 +112,41 @@ https://github.com/Eyjakurniawan/SISTEM-BASIS-DATA.git
 
 # PROGRESS 2: PERANCANGAN BASIS DATA
 
+## Penjelasan Entitas dan Relasi 
+
+### 1. Entitas (Entities)
+Dalam konteks sistem ini, entitas dapat dibagi menjadi Aktor (User) dan Objek (Data/Dokumen):
+
+Mahasiswa: Pengguna sistem yang bertindak sebagai pemohon (yang mengunggah dokumen) atau konsumen (yang mengunduh dokumen).
+
+Staf TU (Tata Usaha): Pengguna sistem yang berfungsi sebagai validator awal, administrator dokumen (registrasi/penomoran), dan pengelola arsip (hapus dokumen).
+
+Dosen (termasuk Dekan/Kaprodi): Pengguna sistem tingkat atas yang bertanggung jawab memeriksa, memberikan disposisi, dan memberikan persetujuan (approval) akhir terhadap dokumen.
+
+Dokumen / Surat: Objek utama yang mengalir di dalam sistem. Dokumen ini memiliki siklus hidup yang berubah statusnya (diunggah, diverifikasi, diberi nomor, diperiksa, didisposisi, disetujui, hingga selesai/pending).
+
+### 2. Relasi dan Alur Proses (Relations & Process Flow)
+Relasi di dalam flowchart ini digambarkan melalui garis alur aktivitas yang menghubungkan para aktor dengan dokumen. Berikut adalah rincian relasinya berdasarkan peran:
+
+A. Alur Relasi Mahasiswa
+Mahasiswa → Dokumen (Download): Mahasiswa memilih dokumen yang tersedia di sistem untuk diunduh langsung hingga selesai.
+Mahasiswa → Dokumen (Upload): Mahasiswa membuat/mengunggah dokumen baru ke dalam sistem, yang kemudian memicu notifikasi ke pihak Staf TU.
+
+B. Alur Relasi Staf TU (Verifikasi & Administrasi)
+Staf TU → Dokumen (Pengelolaan): Staf TU dapat melakukan hapus dokumen atau registrasi baru secara mandiri.
+Staf TU → Dokumen Mahasiswa: Staf TU menerima notifikasi pengajuan, melakukan Verifikasi Dokumen, dan mengambil keputusan:
+Jika TIDAK diterima: Relasi kembali ke Mahasiswa untuk perbaikan.
+Jika YA (diterima): Staf TU Memberikan Nomor Pada Dokumen.
+Staf TU → Dosen: Setelah dokumen resmi diterima dan diberi nomor, sistem mengirimkan Notifikasi Pada Dosen.
+
+C. Alur Relasi Dosen & Pimpinan (Pemeriksaan & Disposisi)
+Setelah Dosen menerima notifikasi dan memeriksa dokumen, alur terbagi menjadi dua jalur evaluasi (Decision):
+Jalur Pemeriksaan Biasa (Oleh Dosen): Dokumen diperiksa → Dokumen Disetujui.
+Jalur Disposisi (Oleh Dekan/Kaprodi): Pimpinan melakukan Review Surat Masuk → Memberikan Disposisi pada Dokumen → Dokumen Disetujui.
+
+D. Tahap Akhir Dokumen
+Dosen/Sistem → Dokumen: Setelah dokumen disetujui (baik lewat jalur pemeriksaan biasa maupun disposisi), sistem akan Mengubah Status dokumen menjadi Selesai atau Pending, lalu proses berakhir (Selesai).
+
 ## Kamus Data (Data Dictionary)
 Kamus data ini menjelaskan secara detail mengenai tipe data, panjang karakter, serta fungsi dari setiap kolom yang digunakan pada rancangan basis data:
 
