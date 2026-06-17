@@ -127,8 +127,8 @@ Hubungan keterkaitan data antar-aktor dimodelkan melalui urutan aktivitas beriku
 
 #### B. Fase Validasi & Registrasi (Staf TU)
 * **Staf TU → Dokumen:** Staf TU menerima notifikasi berkas masuk lalu melakukan tindakan **Verifikasi Dokumen**.
-    * *Jika Tidak Valid:* Sistem menolak dokumen dan mengembalikan alur data ke Mahasiswa untuk direvisi.
     * *Jika Valid (Ya):* Staf TU melakukan registrasi dengan **Memberikan Nomor Pada Dokumen**, sehingga status objek data berubah menjadi **Dokumen Diterima**.
+    * *Jika Tidak Valid:* Sistem menolak dokumen dan mengembalikan alur data ke Mahasiswa untuk direvisi.
 
 #### C. Fase Distribusi, Pemeriksaan & Disposisi
 Setelah status berubah menjadi "Dokumen Diterima", basis data membagi relasi menjadi dua alur pemrosesan:
