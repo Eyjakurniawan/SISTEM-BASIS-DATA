@@ -176,7 +176,7 @@ Kamus data ini menjelaskan secara detail mengenai tipe data, panjang karakter, s
 * `status_dokumen` (VARCHAR, 20): Melacak status berkas secara dinamis (Pending / Diterima / Ditolak / Selesai).
 * `catatan_penolakan` (VARCHAR, 200): Menyimpan teks alasan penolakan jika berkas tidak lolos verifikasi awal oleh staf TU.
 * `file_path` (VARCHAR, 200): Menyimpan teks alamat tautan atau link lokasi folder penyimpanan file digital.
-* `id_user` (INT): Kunci tamu (Foreign Key) untuk mencatat akun pengguna mana yang mengunggah dokumen tersebut.
+* `nim` (VARCHAR, 15): Kunci tamu (Foreign Key) untuk mencatat akun pengguna mana yang mengunggah dokumen tersebut.
 
 ### 6. Tabel Pemeriksaan
 * `id_periksa` (INT): Kunci utama (Primary Key) untuk setiap baris aktivitas peninjauan berkas.
