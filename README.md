@@ -79,7 +79,7 @@ Menghasilkan Query untuk Pelaporan dan Pemantauan Status (Tracking) Membuat peri
 * `status_dokumen` VARCHAR (20)
 * `catatan_penolakan` VARCHAR (200)
 * `file_path` VARCHAR (200)
-* `id_user` INT
+* `nim` VARCHAR(15)
 
 ### Tabel Pemeriksaan
 * `id_periksa` INT
