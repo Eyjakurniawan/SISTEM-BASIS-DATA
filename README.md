@@ -4,7 +4,7 @@
 # NAMA ANGGOTA KELOMPOK 7
 ## Eyja Kurniawan (2501020094)
 ## Yazira Sartika (2501020103)
-## Raihan Parsa Ahza Hamizan (2501200104)
+## Raihan Parsa Ahza Hamizan (2501020104)
 ## Naufal Putra Azjril (2501020108)
 
 # STUDI KASUS
