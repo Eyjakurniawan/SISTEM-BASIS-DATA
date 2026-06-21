@@ -80,6 +80,7 @@ Menghasilkan Query untuk Pelaporan dan Pemantauan Status (Tracking) Membuat peri
 * `catatan_penolakan` VARCHAR (200)
 * `file_path` VARCHAR (200)
 * `nim` VARCHAR(15)
+* `id_pegawai` VARCHAR(15)
 
 ### Tabel Pemeriksaan
 * `id_periksa` INT
@@ -96,7 +97,7 @@ Menghasilkan Query untuk Pelaporan dan Pemantauan Status (Tracking) Membuat peri
 * `isi_instruksi_disposisi` VARCHAR (200)
 
 # DIAGRAM PROSES (FLOWCHART)
-<img width="1041" height="2018" alt="Mentahan Flowchart SBD Revisi" src="https://github.com/user-attachments/assets/99dc035f-e762-47a3-a646-67eba210f7bf" />
+<img width="825" height="1600" alt="WhatsApp Image 2026-06-13 at 9 02 38 PM" src="https://github.com/user-attachments/assets/71a90e42-c836-4589-9b91-3288ae45f876" />
 
 
 # PEMBAGIAN TUGAS SETIAP ANGGOTA
@@ -111,6 +112,8 @@ https://github.com/Eyjakurniawan/SISTEM-BASIS-DATA.git
 ---
 
 # PROGRESS 2: PERANCANGAN BASIS DATA
+## ERD
+<img width="921" height="1071" alt="ERD_SBD_REVISI drawio" src="https://github.com/user-attachments/assets/26c77a59-8c57-446e-b308-a938661b45d4" />
 
 ## Penjelasan Entitas dan Relasi
 1. Entitas Sistem
