@@ -284,7 +284,7 @@ Syarat 3NF adalah memenuhi 2NF dan menghilangkan **Transitive Dependency** (kete
 | 6 | Mas Joko | joko@tu.com | tu456 | Staf TU |
 | 7 | Ferdi Chahyadi, S.Kom., M.Cs | ferdi@dsn.com | dsn002 | Dosen |
 | 8 | Nolan Efranda, M.Kom | nolan@dsn.com | dsn999 | Dosen |
-| 9 | Martaleli Bettiza, S.Si, M.Sc | martaleli@dsn.com | dsn102 | Dekan/Kaprodi |
+| 9 | Martaleli Bettiza, S.Si, M.Sc | martaleli@dsn.com | dsn102 | Dekan |
 | 10 | Feri Irawan, S.Kom., M.Kom | feri@dsn.com | dsn011 | Dosen |
 | 11 | Rifaldi Herikson, M.Kom | rifaldi@dsn.com | dsn714 | Dosen |
 
