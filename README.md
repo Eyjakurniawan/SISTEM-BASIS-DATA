@@ -147,9 +147,9 @@ Setelah status berubah menjadi "Dokumen Diterima", basis data membagi relasi men
 ## Kamus Data (Data Dictionary)
 Kamus data ini menjelaskan secara detail mengenai tipe data, panjang karakter, serta fungsi dari setiap kolom yang digunakan pada rancangan basis data:
 
-### 1. Tabel User
+### 1. Tabel User (Pengguna)
 * `id_user` (INT): Kunci utama (Primary Key) untuk mengidentifikasi setiap akun pengguna secara unik.
-* `nama` (VARCHAR, 50): Menyimpan nama lengkap pengguna saat mendaftaran akun (maksimal 50 karakter).
+* `nama` (VARCHAR, 50): Menyimpan nama lengkap pengguna saat mendaftarkan akun (maksimal 50 karakter).
 * `email` (VARCHAR, 50): Menyimpan alamat email pengguna sebagai identitas unik untuk login.
 * `password` (VARCHAR, 50): Menyimpan kata sandi akun pengguna untuk keamanan login.
 * `role` (VARCHAR, 20): Menentukan peran atau hak akses pengguna di dalam sistem (Mahasiswa / Staf TU / Dosen / Dekan atau Kaprodi).
@@ -161,39 +161,40 @@ Kamus data ini menjelaskan secara detail mengenai tipe data, panjang karakter, s
 * `id_user` (INT): Kunci tamu (Foreign Key) yang menghubungkan profil mahasiswa ke akun loginnya di tabel User.
 
 ### 3. Tabel Dosen
-* `nidn` (VARCHAR, 15): Kunci utama (Primary Key) berupa Nomor Induk Dosen Nasional.
+* `nidn` (VARCHAR, 15): Kunci utama (Primary Key) berupa Nomor Induk Dosen Nasional atau kode pengenal dosen.
 * `nama_dosen` (VARCHAR, 50): Menyimpan nama lengkap dosen beserta gelar (maksimal 50 karakter).
-* `jabatan` (VARCHAR, 40): Menyimpan jabatan struktural atau fungsional dosen (misal: Dosen, Kaprodi, Dekan).
+* `jabatan` (VARCHAR, 40): Menyimpan jabatan struktural atau fungsional dosen (misal: Dosen Pembimbing, Kaprodi, Dekan).
 * `id_user` (INT): Kunci tamu (Foreign Key) yang menghubungkan profil dosen ke akun loginnya di tabel User.
 
 ### 4. Tabel Staf TU
-* `id_pegawai` (VARCHAR, 15): Kunci utama (Primary Key) berupa nomor induk pegawai staf TU.
+* `id_pegawai` (VARCHAR, 15): Kunci utama (Primary Key) berupa nomor induk atau kode pegawai staf TU.
 * `nama_pegawai` (VARCHAR, 50): Menyimpan nama lengkap staf TU (maksimal 50 karakter).
 * `id_user` (INT): Kunci tamu (Foreign Key) yang menghubungkan profil staf ke akun loginnya di tabel User.
 
 ### 5. Tabel Dokumen
 * `id_dokumen` (INT): Kunci utama (Primary Key) untuk mengidentifikasi setiap berkas dokumen secara unik.
-* `nama_berkas` (VARCHAR, 100): Menyimpan nama asli file yang diunggah ke dalam sistem. 
-* `nomor_dokumen` (VARCHAR, 40): Menyimpan nomor surat resmi yang diterbitkan dan diinput oleh prodi/staf TU.
-* `tanggal_unggah` (DATETIME): Mencatat waktu dan tanggal tepat saat dokumen diunggah oleh mahasiswa.
-* `status_dokumen` (VARCHAR, 20): Melacak status berkas secara dinamis (Pending / Diterima / Ditolak / Selesai).
-* `catatan_penolakan` (VARCHAR, 200): Menyimpan teks alasan penolakan jika berkas tidak lolos verifikasi awal oleh staf TU.
-* `file_path` (VARCHAR, 200): Menyimpan teks alamat tautan atau link lokasi folder penyimpanan file digital.
-* `nim` (VARCHAR, 15): Kunci tamu (Foreign Key) untuk mencatat akun pengguna mana yang mengunggah dokumen tersebut.
+* `nama_berkas` (VARCHAR, 100): Menyimpan nama atau judul berkas digital yang diunggah ke dalam sistem.
+* `nomor_dokumen` (VARCHAR, 40): Menyimpan nomor surat resmi yang diberikan oleh staf TU setelah berkas valid.
+* `tanggal_unggah` (DATETIME): Mencatat waktu berupa tanggal dan jam ketika berkas pertama kali diunggah mahasiswa.
+* `status_dokumen` (VARCHAR, 20): Menyimpan status proses terkini dari berkas (Pending / Diterima / Ditolak / Selesai).
+* `catatan_penolakan` (VARCHAR, 200): Menyimpan alasan atau catatan dari staf TU jika dokumen ditolak.
+* `file_path` (VARCHAR, 200): Menyimpan jalur direktori atau lokasi penyimpanan file fisik dokumen di server.
+* `nim` (VARCHAR, 15): Kunci tamu (Foreign Key) yang menghubungkan dokumen dengan mahasiswa pengunggahnya.
+* `id_pegawai` (VARCHAR, 15): Kunci tamu (Foreign Key) yang menghubungkan dokumen dengan staf TU yang memprosesnya.
 
 ### 6. Tabel Pemeriksaan
-* `id_periksa` (INT): Kunci utama (Primary Key) untuk setiap baris aktivitas peninjauan berkas.
-* `id_dokumen` (INT): Kunci tamu (Foreign Key) untuk merujuk ke dokumen mana yang sedang diperiksa.
-* `nidn` (VARCHAR, 15): Kunci tamu (Foreign Key) untuk mencatat dosen mana yang melakukan pemeriksaan berkas.
-* `tanggal_periksa` (DATETIME): Mencatat waktu pelaksanaan pemeriksaan berkas oleh dosen.
-* `catatan_hasil_pemeriksaan` (VARCHAR, 200): Menyimpan teks hasil evaluasi, masukan, atau koreksi dari dosen pemeriksa.
+* `id_periksa` (INT): Kunci utama (Primary Key) untuk mengidentifikasi setiap log riwayat pemeriksaan berkas secara unik.
+* `id_dokumen` (INT): Kunci tamu (Foreign Key) yang merujuk pada berkas dokumen yang sedang diperiksa.
+* `nidn` (VARCHAR, 15): Kunci tamu (Foreign Key) yang merujuk pada dosen yang melakukan pemeriksaan.
+* `tanggal_periksa` (DATETIME): Mencatat waktu berupa tanggal dan jam pelaksanaan pemeriksaan berkas oleh dosen.
+* `catatan_hasil_pemeriksaan` (VARCHAR, 200): Menyimpan komentar, hasil penilaian, atau catatan evaluasi dari dosen.
 
 ### 7. Tabel Disposisi
-* `id_disposisi` (INT): Kunci utama (Primary Key) untuk setiap lembar instruksi resmi pimpinan.
-* `id_dokumen` (INT): Kunci tamu (Foreign Key) untuk merujuk pada surat masuk yang membutuhkan disposisi.
-* `id_user` (INT): Kunci tamu (Foreign Key) untuk mencatat akun pimpinan (Dekan/Kaprodi) yang mengeluarkan perintah disposisi.
-* `tanggal_disposisi` (DATETIME): Mencatat tanggal ketika instruksi disposisi resmi dikeluarkan.
-* `isi_instruksi_disposisi` (VARCHAR, 200): Menyimpan teks detail perintah atau disposisi dari pimpinan untuk ditindaklanjuti.
+* `id_disposisi` (INT): Kunci utama (Primary Key) untuk mengidentifikasi setiap lembar instruksi disposisi secara unik.
+* `id_dokumen` (INT): Kunci tamu (Foreign Key) yang merujuk pada dokumen surat masuk yang membutuhkan disposisi.
+* `id_user` (INT): Kunci tamu (Foreign Key) yang merujuk pada pimpinan (Kaprodi/Dekan) yang memberikan instruksi.
+* `tanggal_disposisi` (DATETIME): Mencatat waktu berupa tanggal dan jam pemberian instruksi disposisi oleh pimpinan.
+* `isi_instruksi_disposisi` (VARCHAR, 200): Menyimpan pesan perintah atau teks instruksi lanjutan terkait penanganan berkas.
 
 ## Normalisasi UNF → 1NF → 2NF → 3NF
 Normalisasi adalah teknik perancangan basis data yang digunakan untuk menyusun tabel-tabel secara logis guna mengurangi **redudansi** (pengulangan data) dan mencegah **anomali** (kesalahan saat menambah, mengubah, atau menghapus data). Proses ini diibaratkan seperti merapikan lemari pakaian; kita memisahkan kemeja, celana, dan jaket ke dalam laci yang berbeda agar lebih mudah dicari dan tidak memakan tempat secara percuma.
