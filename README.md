@@ -291,10 +291,10 @@ Syarat 3NF adalah memenuhi 2NF dan menghilangkan **Transitive Dependency** (kete
 #### 2. Tabel Mahasiswa
 | nim (PK) | nama_mahasiswa | program_studi | id_user (FK) |
 | :--- | :--- | :--- | :--- |
-| 2501020103 | Yazira Sartika | Informatika | 1 |
-| 2501020094 | Eyja Kurniawan | Sistem Informasi | 2 |
-| 2501020104 | Raihan Parsa Ahza Hamizan | Informatika | 3 |
-| 2501020108 | Naufal Putra Azjril | Teknologi Informasi | 4 |
+| 2501020103 | Yazira Sartika | Teknik Informatika | 1 |
+| 2501020094 | Eyja Kurniawan | Teknik Informatika | 2 |
+| 2501020104 | Raihan Parsa Ahza Hamizan | Teknik Informatika | 3 |
+| 2501020108 | Naufal Putra Azjril | Teknik Informatika | 4 |
 
 #### 3. Tabel Staf TU
 | id_pegawai (PK) | nama_pegawai | id_user (FK) |
