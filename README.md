@@ -205,7 +205,130 @@ Pada tahap UNF, data dikumpulkan apa adanya dari catatan/rekap manual. Data masi
 #### Tabel Rekap Pengajuan Dokumen (Raw Data)
 | NIM | Info Mahasiswa | Info Dokumen (Berkas, No, Tgl, Path) | Status & Catatan Penolakan | Staf TU (ID - Nama) | Dosen Pemeriksa | Catatan Periksa | Disposisi Pimpinan |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| 12345 | Budi (Informatika) | Surat Magang.pdf, SM-001, 2026-06-20 10:00, /docs/magang.pdf | Pending (-) | P01 - Mbak Rini | 111-Pak Andi, 222-Bu Sari | Tolong revisi ttd, Format oke | 333-Pak Dekan (Setujui) |
-| 67890 | Siti (Sistem Informasi) | Cuti Kuliah.pdf, -, 2026-06-21 08:30, /docs/cuti.pdf | Ditolak (Berkas tidak lengkap) | P02 - Mas Joko | - | - | - |
+| 2501020103 | Yazira Sartika (Teknik Informatika) | Surat Izin Observasi Kampung Sei Sudip.pdf, SIO-001, 2026-06-18 09:00, /docs/observasi.pdf | Pending (-) | P01 - Mbak Rini | 0022028903-Ferdi Chahyadi, 9990631627-Nolan Efranda | Tambahkan tujuan, Format sudah oke | 1028087501-Martaleli Bettiza (Setujui segera) |
+| 2501020094 | Eyja Kurniawan (Teknik Informatika) | Proposal Kegiatan Badminton.pdf, -, 2026-06-19 14:30, /docs/badminton.pdf | Ditolak (Revisi RAB) | P02 - Mas Joko | - | - | - |
+| 2501020104 | Raihan Parsa Ahza Hamizan (Teknik Informatika) | Surat Permohonan Cuti.pdf, SC-045, 2026-06-20 10:15, /docs/cuti.pdf | Selesai (-) | P01 - Mbak Rini | 0117099601-Feri Irawan | Sesuai aturan | 1028087501-Martaleli Bettiza (Disetujui) |
+| 2501020108 | Naufal Putra Azjril (Teknik Informatika) | Pengajuan Keringanan UKT.pdf, UKT-012, 2026-06-21 08:00, /docs/ukt.pdf | Diperiksa (-) | P02 - Mas Joko | 7141775676130173-Rifaldi Herikson | Sedang diverifikasi | - |
 
 ---
+
+### 2. 1NF (First Normal Form / Bentuk Normal Kesatu)
+Syarat 1NF adalah setiap atribut harus bernilai **atomik** (tidak ada multi-value atau grup berulang dalam satu sel) dan tidak ada baris yang duplikat. Data pada baris pertama (dokumen observasi Yazira Sartika) yang diperiksa oleh lebih dari satu dosen, dipecah menjadi baris terpisah.
+
+#### Tabel Dokumen 1NF
+| NIM | Nama_Mhs | Prodi | Nama_Berkas | Nomor_Dokumen | Tanggal_Unggah | File_Path | Status_Dokumen | Catatan_Penolakan | ID_Pegawai | Nama_Pegawai | NIDN_Pemeriksa | Nama_Dosen | Catatan_Periksa | ID_Pimpinan | Disposisi |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| 2501020103 | Yazira Sartika | Teknik Informatika | Surat Izin Observasi Kampung Sei Sudip.pdf | SIO-001 | 2026-06-18 09:00 | /docs/observasi.pdf | Pending | - | P01 | Mbak Rini | 0022028903 | Ferdi Chahyadi, S.Kom., M.Cs | Tambahkan tujuan | 1028087501 | Setujui segera |
+| 2501020103 | Yazira Sartika | Teknik Informatika | Surat Izin Observasi Kampung Sei Sudip.pdf | SIO-001 | 2026-06-18 09:00 | /docs/observasi.pdf | Pending | - | P01 | Mbak Rini | 9990631627 | Nolan Efranda, M.Kom | Format sudah oke | 1028087501 | Setujui segera |
+| 2501020094 | Eyja Kurniawan | Teknik Informatika | Proposal Kegiatan Badminton.pdf | NULL | 2026-06-19 14:30 | /docs/badminton.pdf | Ditolak | Revisi RAB | P02 | Mas Joko | NULL | NULL | NULL | NULL | NULL |
+| 2501020104 | Raihan Parsa Ahza Hamizan | Teknik Informatika | Surat Permohonan Cuti.pdf | SC-045 | 2026-06-20 10:15 | /docs/cuti.pdf | Selesai | - | P01 | Mbak Rini | 0117099601 | Feri Irawan, S.Kom., M.Kom | Sesuai aturan | 1028087501 | Disetujui |
+| 2501020108 | Naufal Putra Azjril | Teknik Informatika | Pengajuan Keringanan UKT.pdf | UKT-012 | 2026-06-21 08:00 | /docs/ukt.pdf | Diperiksa | - | P02 | Mas Joko | 7141775676130173 | Rifaldi Herikson, M.Kom | Sedang diverifikasi | NULL | NULL |
+
+---
+
+### 3. 2NF (Second Normal Form / Bentuk Normal Kedua)
+Syarat 2NF adalah data memenuhi 1NF dan menghilangkan **Partial Dependency** (ketergantungan parsial). Tabel raksasa di 1NF dipisahkan menjadi tabel entitas utama (Master) dan tabel kegiatan (Transaksi).
+
+#### A. Tabel Mahasiswa
+| NIM (PK) | Nama_Mhs | Prodi | Email_Login | Password_Login |
+| :--- | :--- | :--- | :--- | :--- |
+| 2501020103 | Yazira Sartika | Teknik Informatika | yazira@mhs.com | pass123 |
+| 2501020094 | Eyja Kurniawan | Teknik Informatika | eyja@mhs.com | pass456 |
+| 2501020104 | Raihan Parsa Ahza Hamizan | Teknik Informatika | raihan@mhs.com | pass789 |
+| 2501020108 | Naufal Putra Azjril | Teknik Informatika | naufal@mhs.com | pass000 |
+
+#### B. Tabel Staf TU
+| ID_Pegawai (PK) | Nama_Pegawai | Email_Login | Password_Login |
+| :--- | :--- | :--- | :--- |
+| P01 | Mbak Rini | rini@tu.com | tu123 |
+| P02 | Mas Joko | joko@tu.com | tu456 |
+
+#### C. Tabel Dosen / Pimpinan
+| NIDN (PK) | Nama_Dosen | Jabatan | Email_Login | Password_Login |
+| :--- | :--- | :--- | :--- | :--- |
+| 0022028903 | Ferdi Chahyadi, S.Kom., M.Cs | Dosen | ferdi@dsn.com | dsn002 |
+| 9990631627 | Nolan Efranda, M.Kom | Dosen | nolan@dsn.com | dsn999 |
+| 7141775676130173 | Rifaldi Herikson, M.Kom | Dosen | rifaldi@dsn.com | dsn714 |
+| 0117099601 | Feri Irawan, S.Kom., M.Kom | Dosen | feri@dsn.com | dsn011 |
+| 1028087501 | Martaleli Bettiza, S.Si, M.Sc | Dekan | martaleli@dsn.com | dsn102 |
+
+#### D. Tabel Dokumen
+| ID_Dokumen (PK) | NIM (FK) | ID_Pegawai (FK) | Nama_Berkas | Nomor_Dokumen | Tanggal_Unggah | Status_Dokumen | Catatan_Penolakan | File_Path |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| 1 | 2501020103 | P01 | Surat Izin Observasi Kampung Sei Sudip.pdf | SIO-001 | 2026-06-18 09:00 | Pending | - | /docs/observasi.pdf |
+| 2 | 2501020094 | P02 | Proposal Kegiatan Badminton.pdf | NULL | 2026-06-19 14:30 | Ditolak | Revisi RAB | /docs/badminton.pdf |
+| 3 | 2501020104 | P01 | Surat Permohonan Cuti.pdf | SC-045 | 2026-06-20 10:15 | Selesai | - | /docs/cuti.pdf |
+| 4 | 2501020108 | P02 | Pengajuan Keringanan UKT.pdf | UKT-012 | 2026-06-21 08:00 | Diperiksa | - | /docs/ukt.pdf |
+
+#### E. Tabel Transaksi Lanjutan (Pemeriksaan & Disposisi)
+| ID_Trans (PK) | ID_Dokumen (FK) | NIDN_Pemeriksa (FK) | Catatan_Periksa | ID_Pimpinan (FK) | Disposisi |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| TRX-1 | 1 | 0022028903 | Tambahkan tujuan | 1028087501 | Setujui segera |
+| TRX-2 | 1 | 9990631627 | Format sudah oke | 1028087501 | Setujui segera |
+| TRX-3 | 3 | 0117099601 | Sesuai aturan | 1028087501 | Disetujui |
+| TRX-4 | 4 | 7141775676130173 | Sedang diverifikasi | NULL | NULL |
+
+---
+
+### 4. 3NF (Third Normal Form / Bentuk Normal Ketiga)
+Syarat 3NF adalah memenuhi 2NF dan menghilangkan **Transitive Dependency** (ketergantungan transitif). Informasi kredensial login ditarik keluar menjadi satu **Tabel User**. Alur proses setelah dokumen diterima dipisah secara tegas menjadi **Tabel Pemeriksaan** dan **Tabel Disposisi**.
+
+#### 1. Tabel User (Sentralisasi Autentikasi)
+| id_user (PK) | nama | email | password | role |
+| :--- | :--- | :--- | :--- | :--- |
+| 1 | Yazira Sartika | yazira@mhs.com | pass123 | Mahasiswa |
+| 2 | Eyja Kurniawan | eyja@mhs.com | pass456 | Mahasiswa |
+| 3 | Raihan Parsa Ahza Hamizan | raihan@mhs.com | pass789 | Mahasiswa |
+| 4 | Naufal Putra Azjril | naufal@mhs.com | pass000 | Mahasiswa |
+| 5 | Mbak Rini | rini@tu.com | tu123 | Staf TU |
+| 6 | Mas Joko | joko@tu.com | tu456 | Staf TU |
+| 7 | Ferdi Chahyadi, S.Kom., M.Cs | ferdi@dsn.com | dsn002 | Dosen |
+| 8 | Nolan Efranda, M.Kom | nolan@dsn.com | dsn999 | Dosen |
+| 9 | Martaleli Bettiza, S.Si, M.Sc | martaleli@dsn.com | dsn102 | Dekan/Kaprodi |
+| 10 | Feri Irawan, S.Kom., M.Kom | feri@dsn.com | dsn011 | Dosen |
+| 11 | Rifaldi Herikson, M.Kom | rifaldi@dsn.com | dsn714 | Dosen |
+
+#### 2. Tabel Mahasiswa
+| nim (PK) | nama_mahasiswa | program_studi | id_user (FK) |
+| :--- | :--- | :--- | :--- |
+| 2501020103 | Yazira Sartika | Informatika | 1 |
+| 2501020094 | Eyja Kurniawan | Sistem Informasi | 2 |
+| 2501020104 | Raihan Parsa Ahza Hamizan | Informatika | 3 |
+| 2501020108 | Naufal Putra Azjril | Teknologi Informasi | 4 |
+
+#### 3. Tabel Staf TU
+| id_pegawai (PK) | nama_pegawai | id_user (FK) |
+| :--- | :--- | :--- |
+| P01 | Mbak Rini | 5 |
+| P02 | Mas Joko | 6 |
+
+#### 4. Tabel Dosen
+| nidn (PK) | nama_dosen | jabatan | id_user (FK) |
+| :--- | :--- | :--- | :--- |
+| 0022028903 | Ferdi Chahyadi, S.Kom., M.Cs | Dosen | 7 |
+| 9990631627 | Nolan Efranda, M.Kom | Dosen | 8 |
+| 1028087501 | Martaleli Bettiza, S.Si, M.Sc | Dekan | 9 |
+| 0117099601 | Feri Irawan, S.Kom., M.Kom | Dosen | 10 |
+| 7141775676130173 | Rifaldi Herikson, M.Kom | Dosen | 11 |
+
+#### 5. Tabel Dokumen (Tabel Utama Objek Berkas)
+| id_dokumen (PK) | nama_berkas | nomor_dokumen | tanggal_unggah | status_dokumen | catatan_penolakan | file_path | nim (FK) | id_pegawai (FK) |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| 1 | Surat Izin Observasi Kampung Sei Sudip.pdf | SIO-001 | 2026-06-18 09:00 | Pending | - | /docs/observasi.pdf | 2501020103 | P01 |
+| 2 | Proposal Kegiatan Badminton.pdf | NULL | 2026-06-19 14:30 | Ditolak | Revisi RAB | /docs/badminton.pdf | 2501020094 | P02 |
+| 3 | Surat Permohonan Cuti.pdf | SC-045 | 2026-06-20 10:15 | Selesai | - | /docs/cuti.pdf | 2501020104 | P01 |
+| 4 | Pengajuan Keringanan UKT.pdf | UKT-012 | 2026-06-21 08:00 | Diperiksa | - | /docs/ukt.pdf | 2501020108 | P02 |
+
+#### 6. Tabel Pemeriksaan
+| id_periksa (PK) | id_dokumen (FK) | nidn (FK) | tanggal_periksa | catatan_hasil_pemeriksaan |
+| :--- | :--- | :--- | :--- | :--- |
+| 1 | 1 | 0022028903 | 2026-06-18 13:00 | Tambahkan tujuan |
+| 2 | 1 | 9990631627 | 2026-06-18 14:30 | Format sudah oke |
+| 3 | 3 | 0117099601 | 2026-06-20 13:00 | Sesuai aturan |
+| 4 | 4 | 7141775676130173 | 2026-06-21 10:00 | Sedang diverifikasi |
+
+#### 7. Tabel Disposisi
+| id_disposisi (PK) | id_dokumen (FK) | id_user (FK) | tanggal_disposisi | isi_instruksi_disposisi |
+| :--- | :--- | :--- | :--- | :--- |
+| 1 | 1 | 9 | 2026-06-19 09:00 | Setujui segera |
+| 2 | 3 | 9 | 2026-06-21 08:30 | Disetujui |
