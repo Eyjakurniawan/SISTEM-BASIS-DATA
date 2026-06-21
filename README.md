@@ -195,3 +195,16 @@ Kamus data ini menjelaskan secara detail mengenai tipe data, panjang karakter, s
 * `tanggal_disposisi` (DATETIME): Mencatat tanggal ketika instruksi disposisi resmi dikeluarkan.
 * `isi_instruksi_disposisi` (VARCHAR, 200): Menyimpan teks detail perintah atau disposisi dari pimpinan untuk ditindaklanjuti.
 
+## Normalisasi UNF → 1NF → 2NF → 3NF
+Normalisasi adalah teknik perancangan basis data yang digunakan untuk menyusun tabel-tabel secara logis guna mengurangi **redudansi** (pengulangan data) dan mencegah **anomali** (kesalahan saat menambah, mengubah, atau menghapus data). Proses ini diibaratkan seperti merapikan lemari pakaian; kita memisahkan kemeja, celana, dan jaket ke dalam laci yang berbeda agar lebih mudah dicari dan tidak memakan tempat secara percuma.
+
+### 1. UNF (Unnormalized Form / Bentuk Tidak Normal)
+Pada tahap UNF, data dikumpulkan apa adanya dari catatan/rekap manual. Data masih memiliki *repeating group* (satu sel berisi banyak nilai), sel yang digabung (merging), dan format pencatatan yang bertumpuk antara data mahasiswa, dokumen, staf TU yang melayani, hingga dosen pemeriksa.
+
+#### Tabel Rekap Pengajuan Dokumen (Raw Data)
+| NIM | Info Mahasiswa | Info Dokumen (Berkas, No, Tgl, Path) | Status & Catatan Penolakan | Staf TU (ID - Nama) | Dosen Pemeriksa | Catatan Periksa | Disposisi Pimpinan |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| 12345 | Budi (Informatika) | Surat Magang.pdf, SM-001, 2026-06-20 10:00, /docs/magang.pdf | Pending (-) | P01 - Mbak Rini | 111-Pak Andi, 222-Bu Sari | Tolong revisi ttd, Format oke | 333-Pak Dekan (Setujui) |
+| 67890 | Siti (Sistem Informasi) | Cuti Kuliah.pdf, -, 2026-06-21 08:30, /docs/cuti.pdf | Ditolak (Berkas tidak lengkap) | P02 - Mas Joko | - | - | - |
+
+---
