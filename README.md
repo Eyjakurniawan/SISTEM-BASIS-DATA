@@ -314,21 +314,28 @@ Syarat 3NF adalah memenuhi 2NF dan menghilangkan **Transitive Dependency** (kete
 #### 5. Tabel Dokumen (Tabel Utama Objek Berkas)
 | id_dokumen (PK) | nama_berkas | nomor_dokumen | tanggal_unggah | status_dokumen | catatan_penolakan | file_path | nim (FK) | id_pegawai (FK) |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| 1 | Surat Izin Observasi Kampung Sei Sudip.pdf | SIO-001 | 2026-06-18 09:00 | Pending | - | /docs/observasi.pdf | 2501020103 | P01 |
-| 2 | Proposal Kegiatan Badminton.pdf | NULL | 2026-06-19 14:30 | Ditolak | Revisi RAB | /docs/badminton.pdf | 2501020094 | P02 |
-| 3 | Surat Permohonan Cuti.pdf | SC-045 | 2026-06-20 10:15 | Selesai | - | /docs/cuti.pdf | 2501020104 | P01 |
+| 1 | Surat Izin Observasi Kampung Sei Sudip.pdf | SIO-001 | 2026-06-18 08:15 | Pending | - | /docs/observasi.pdf | 2501020103 | P01 |
+| 2 | Proposal Kegiatan Badminton.pdf | NULL | 2026-06-19 07:00 | Ditolak | Revisi RAB | /docs/badminton.pdf | 2501020094 | P02 |
+| 3 | Surat Permohonan Cuti.pdf | SC-045 | 2026-06-20 07:30 | Selesai | - | /docs/cuti.pdf | 2501020104 | P01 |
 | 4 | Pengajuan Keringanan UKT.pdf | UKT-012 | 2026-06-21 08:00 | Diperiksa | - | /docs/ukt.pdf | 2501020108 | P02 |
 
 #### 6. Tabel Pemeriksaan
 | id_periksa (PK) | id_dokumen (FK) | nidn (FK) | tanggal_periksa | catatan_hasil_pemeriksaan |
 | :--- | :--- | :--- | :--- | :--- |
-| 1 | 1 | 0022028903 | 2026-06-18 13:00 | Tambahkan tujuan |
-| 2 | 1 | 9990631627 | 2026-06-18 14:30 | Format sudah oke |
-| 3 | 3 | 0117099601 | 2026-06-20 13:00 | Sesuai aturan |
-| 4 | 4 | 7141775676130173 | 2026-06-21 10:00 | Sedang diverifikasi |
+| 1 | 1 | 0022028903 | 2026-06-18 10:00 | Tambahkan tujuan |
+| 2 | 1 | 9990631627 | 2026-06-18 09:30 | Format sudah oke |
+| 3 | 3 | 0117099601 | 2026-06-20 09:00 | Sesuai aturan |
+| 4 | 4 | 7141775676130173 | 2026-06-21 10:30 | Sedang diverifikasi |
 
 #### 7. Tabel Disposisi
 | id_disposisi (PK) | id_dokumen (FK) | id_user (FK) | tanggal_disposisi | isi_instruksi_disposisi |
 | :--- | :--- | :--- | :--- | :--- |
-| 1 | 1 | 9 | 2026-06-19 09:00 | Setujui segera |
-| 2 | 3 | 9 | 2026-06-21 08:30 | Disetujui |
+| 1 | 1 | 9 | 2026-06-19 14:30 | Setujui segera |
+| 2 | 3 | 9 | 2026-06-21 14:00 | Disetujui |
+
+📌 **Catatan Penting Perubahan Relasi Pimpinan (2NF ke 3NF):**
+Jika diperhatikan, pada tahap **2NF** Tabel Disposisi menggunakan `NIDN` sebagai relasi penunjuk Pimpinan, namun pada tahap **3NF** berubah menjadi `id_user`.
+
+**Alasan Perubahan Struktur:**
+1. **Penerapan Aturan Ketat 3NF:** Untuk menghilangkan *Transitive Dependency*, seluruh data kredensial login (`email`, `password`, `role`) mahasiswa, staf TU, maupun dosen ditarik keluar dari tabel profil masing-masing dan disatukan secara terpusat ke dalam **Tabel User**.
+2. **Otorisasi Aksi pada Aplikasi:** Tindakan *"Memberikan Disposisi"* di dalam sistem digital merupakan sebuah aksi otorisasi yang melekat pada **Akun Login (User)** yang sedang aktif di aplikasi (siapa yang menekan tombol setuju), bukan melekat pada identitas fisik akademik dosen (`NIDN`). Oleh karena itu, Tabel Disposisi dihubungkan langsung ke `id_user` pada Tabel User untuk memastikan bahwa aktor yang mengeksekusi perintah tersebut memiliki hak akses (*role*) yang sah sebagai Dekan/Pimpinan.
