@@ -333,7 +333,7 @@ Syarat 3NF adalah memenuhi 2NF dan menghilangkan **Transitive Dependency** (kete
 | 1 | 1 | 9 | 2026-06-19 14:30 | Setujui segera |
 | 2 | 3 | 9 | 2026-06-21 14:00 | Disetujui |
 
-📌 **Catatan Penting Perubahan Relasi Pimpinan (2NF ke 3NF):**
+**Catatan Penting Perubahan Relasi Pimpinan (2NF ke 3NF):**
 Jika diperhatikan, pada tahap **2NF** Tabel Disposisi menggunakan `NIDN` sebagai relasi penunjuk Pimpinan, namun pada tahap **3NF** berubah menjadi `id_user`.
 
 **Alasan Perubahan Struktur:**
