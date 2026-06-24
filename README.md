@@ -379,7 +379,8 @@ Skenario 2 Skenario 2: Pengujian Alur Validasi Perubahan Status Berkas (DML Upda
 # PROGRESS 4: LAPORAN AKHIR
 
 # DOKUMENTASI
-<img width="1280" height="960" alt="WhatsApp Image 2026-06-24 at 18 15 12" src="https://github.com/user-attachments/assets/c09cfd5f-9806-4a33-bb60-e166a0a7d7f4" />
+<img width="1280" height="960" alt="WhatsApp Image 2026-06-24 at 18 21 49" src="https://github.com/user-attachments/assets/4b99046f-4608-4ba7-a6c7-a780b22dbc8e" />
+
 
 
 
