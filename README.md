@@ -106,6 +106,9 @@ Menghasilkan Query untuk Pelaporan dan Pemantauan Status (Tracking) Membuat peri
 3. Raihan (2501020104) = Bertugas dalam membuat rancangan kebutuhan data.
 4. Eyja Kurniawan (2501020094) = Bertugas dalam membuat diagram proses atau flowchart.
 
+# DOKUMENTASI
+<img width="1200" height="1600" alt="WhatsApp Image 2026-06-24 at 18 16 15" src="https://github.com/user-attachments/assets/7f719f9d-0315-4130-8c1a-f1cf0f62f4bd" />
+
 # LINK REPOSITORY GITHUB
 https://github.com/Eyjakurniawan/SISTEM-BASIS-DATA.git
 
@@ -372,6 +375,12 @@ Skenario 2 Skenario 2: Pengujian Alur Validasi Perubahan Status Berkas (DML Upda
 - Tujuan Pengujian: Mensimulasikan aktivitas operasional Staf TU saat memverifikasi dokumen masuk, mengubah status berkas menjadi Diperiksa serta menerbitkan nomor surat resminya
 - Hasil Pengujian: Kolom data ter-update dengan sempurna, status berubah menjadi 'Diperiksa' tanpa memicu galat
 - Kesimpulan: BERHASIL. Fungsi manipulasi siklus dokumen berjalan normal.
+
+# PROGRESS 4: LAPORAN AKHIR
+
+# DOKUMENTASI
+<img width="1280" height="960" alt="WhatsApp Image 2026-06-24 at 18 15 12" src="https://github.com/user-attachments/assets/c09cfd5f-9806-4a33-bb60-e166a0a7d7f4" />
+
 
 
 
