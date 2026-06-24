@@ -344,16 +344,34 @@ Jika diperhatikan, pada tahap **2NF** Tabel Disposisi menggunakan `NIDN` sebagai
 
 # PROGRESS 3: IMPLEMENTASI DATABASE DAN PENGUJIAN
 
+## Ketentuan 1 dan 2: Script DDL dan Constraints (PK, FK, UNIQUE, NOT NULL)
 <img width="635" height="542" alt="1" src="https://github.com/user-attachments/assets/331c24a5-e2e5-4966-b6d9-505136178860" />
-<img width="1342" height="600" alt="7" src="https://github.com/user-attachments/assets/04c06b40-1d87-4ae1-8ac9-493fe861bd4a" />
-<img width="1049" height="370" alt="6" src="https://github.com/user-attachments/assets/a9d3a9a5-1366-4941-ae80-9fd9efaefb39" />
-<img width="1081" height="214" alt="5" src="https://github.com/user-attachments/assets/bb2ebf4b-6694-43d5-8e6e-eb3016f26563" />
-<img width="1063" height="688" alt="4" src="https://github.com/user-attachments/assets/bd7c2250-5792-483e-8feb-a1f653464d84" />
-<img width="976" height="501" alt="3" src="https://github.com/user-attachments/assets/7a1ec9a0-4ddf-42c4-8530-b15cf79c341d" />
 <img width="749" height="90" alt="2" src="https://github.com/user-attachments/assets/13727edc-ce4f-493c-ac43-aaae3ad887a0" />
-<img width="1262" height="91" alt="11" src="https://github.com/user-attachments/assets/77c34666-bb1b-46cc-b932-eb94bc09fb4a" />
-<img width="1054" height="665" alt="10" src="https://github.com/user-attachments/assets/b37eb39c-0e0c-471c-8851-73c91ff7d546" />
-<img width="1348" height="620" alt="9" src="https://github.com/user-attachments/assets/20147533-f136-496f-bd16-b92ad9799533" />
+<img width="976" height="501" alt="3" src="https://github.com/user-attachments/assets/7a1ec9a0-4ddf-42c4-8530-b15cf79c341d" />
+<img width="1063" height="688" alt="4" src="https://github.com/user-attachments/assets/bd7c2250-5792-483e-8feb-a1f653464d84" />
+<img width="1081" height="214" alt="5" src="https://github.com/user-attachments/assets/bb2ebf4b-6694-43d5-8e6e-eb3016f26563" />
+
+## Ketentuan 3: Data Uji
+<img width="1049" height="370" alt="6" src="https://github.com/user-attachments/assets/a9d3a9a5-1366-4941-ae80-9fd9efaefb39" />
+<img width="1342" height="600" alt="7" src="https://github.com/user-attachments/assets/04c06b40-1d87-4ae1-8ac9-493fe861bd4a" />
+
+## Ketentuan 4: 10 Query SQL
 <img width="1015" height="601" alt="8" src="https://github.com/user-attachments/assets/f9bb2ab8-23db-4317-b2c3-04a815be995d" />
+<img width="1348" height="620" alt="9" src="https://github.com/user-attachments/assets/20147533-f136-496f-bd16-b92ad9799533" />
+<img width="1054" height="665" alt="10" src="https://github.com/user-attachments/assets/b37eb39c-0e0c-471c-8851-73c91ff7d546" />
+
+## Skenario Pengujian
+Skenario 1: Pengujian Validasi Keamanan Registrasi Akun (Constraint Unique)
+<img width="1262" height="91" alt="11" src="https://github.com/user-attachments/assets/77c34666-bb1b-46cc-b932-eb94bc09fb4a" />
+- Tujuan Pengujian: Memastikan sistem database menolak pendaftaran akun baru jika menggunakan alamat email yang sudah terdaftar di sistem
+- Hasil Pengujian: Proses ditolak oleh MySQL dengan pesan: ERROR 1062 (23000): Duplicate entry 'yazira@mhs.com' for key 'unique_email'
+- Kesimpulan: BERHASIL. Aturan pembatasan data unik email berjalan dengan baik
+
+Skenario 2 Skenario 2: Pengujian Alur Validasi Perubahan Status Berkas (DML Update)
+<img width="1216" height="138" alt="Screenshot (560)" src="https://github.com/user-attachments/assets/6c9db26b-2126-4ae7-9ac9-0bc8862186ea" />
+- Tujuan Pengujian: Mensimulasikan aktivitas operasional Staf TU saat memverifikasi dokumen masuk, mengubah status berkas menjadi Diperiksa serta menerbitkan nomor surat resminya
+- Hasil Pengujian: Kolom data ter-update dengan sempurna, status berubah menjadi 'Diperiksa' tanpa memicu galat
+- Kesimpulan: BERHASIL. Fungsi manipulasi siklus dokumen berjalan normal.
+
 
 
