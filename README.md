@@ -39,7 +39,7 @@ Menghasilkan Query untuk Pelaporan dan Pemantauan Status (Tracking) Membuat peri
 2. Sistem harus dapat mencatat riwayat pengajuan dokumen yang diunggah oleh Mahasiswa beserta waktu unggahnya.
 3. Sistem harus dapat memfasilitasi Staf TU untuk melakukan pencatatan nomor dokumen resmi pada berkas yang telah dinyatakan valid.
 4. Sistem harus dapat menyimpan alasan penolakan berkas di dalam database apabila Staf TU mengubah status dokumen menjadi "Ditolak".
-5. Sistem harus dapat memperbarui status dokumen secara dinamis (Pending, Diterima, Ditolak, Disetujui) di dalam tabel terkait.
+5. Sistem harus dapat memperbarui status dokumen secara dinamis (Pending, Diterima, Ditolak, Diperiksa, Disetujui, Selesai) di dalam tabel terkait.
 6. Sistem harus dapat mencatat pengiriman notifikasi berkas masuk secara otomatis dari Staf TU ke Dosen Pemeriksa.
 7. Sistem harus dapat menyimpan data hasil penilaian, komentar, atau catatan pemeriksaan dokumen yang dilakukan oleh Dosen.
 8. Sistem harus dapat mencatat lembar disposisi dari Dekan/Kaprodi yang berisi instruksi kelanjutan berkas.
@@ -341,6 +341,76 @@ Jika diperhatikan, sejak pemisahan tabel transaksi, relasi penstrukturan pimpina
 ---
 
 # PROGRESS 3: IMPLEMENTASI DATABASE DAN PENGUJIAN
+## Ketentuan 1 dan 2: Script SQL DDL & Constraint
+<img width="527" height="88" alt="1" src="https://github.com/user-attachments/assets/55f678e5-e8da-4708-a518-9c42dde9d8c0" />
+<img width="492" height="148" alt="2" src="https://github.com/user-attachments/assets/42e5a147-fa96-4a7d-add9-3a31c5c9b4af" />
+<img width="838" height="149" alt="3" src="https://github.com/user-attachments/assets/274ddeb0-9a1b-4c5c-84a2-b4779d1cfdf6" />
+<img width="821" height="136" alt="4" src="https://github.com/user-attachments/assets/4405812e-192d-4a24-8be2-a8c1e1d61de1" />
+<img width="805" height="156" alt="5" src="https://github.com/user-attachments/assets/ca4f78d7-1fb2-4ff9-a78d-3dc6825b8a3f" />
+<img width="856" height="229" alt="6" src="https://github.com/user-attachments/assets/82729f06-3c77-4a5e-8553-22bd1b620762" />
+<img width="946" height="162" alt="7" src="https://github.com/user-attachments/assets/56df88f1-6f98-4bd7-9df4-ad75e96e79e7" />
+<img width="943" height="168" alt="8" src="https://github.com/user-attachments/assets/f042d9d1-f864-4580-a8c4-0ffc2a6bdcf0" />
+
+## Ketentuan 3: Data uji
+<img width="840" height="230" alt="9" src="https://github.com/user-attachments/assets/98669f81-bd44-4fce-8e2f-2186bdddf11d" />
+<img width="869" height="120" alt="10" src="https://github.com/user-attachments/assets/404e5adc-97e4-429b-b350-d9a4afe78da3" />
+<img width="840" height="83" alt="11" src="https://github.com/user-attachments/assets/b7f217c7-8923-45fe-8931-fd04b79d21fd" />
+<img width="827" height="136" alt="12" src="https://github.com/user-attachments/assets/9fdb3cb0-520e-4c4d-a163-7e02b942e37d" />
+<img width="1348" height="136" alt="13" src="https://github.com/user-attachments/assets/91145fc2-cd94-4dae-8a24-1fe5d82d9726" />
+<img width="1106" height="120" alt="14" src="https://github.com/user-attachments/assets/0ed1a76f-a6c6-4624-a53f-fe3c26f767fd" />
+<img width="1061" height="90" alt="15" src="https://github.com/user-attachments/assets/6d38abc1-b405-43fc-8224-fb97cf5d2e9d" />
+
+## Ketentuan 4: 10 Query SQL
+Query 1: Menampilkan Seluruh Dokumen yang Berstatus 'Pending'
+Fungsi: Membantu Staf TU memantau antrean berkas mahasiswa baru yang masuk ke sistem untuk segera divalidasi.
+<img width="808" height="150" alt="16" src="https://github.com/user-attachments/assets/63cb008c-5119-4a51-93b9-b0f85867a494" />
+
+Query 2: Menampilkan Daftar Pengajuan Dokumen Lengkap dengan Nama Mahasiswa (INNER JOIN)
+Fungsi: Menggabungkan tabel dokumen dan mahasiswa agar memunculkan nama terang pemilik dokumen.
+<img width="900" height="200" alt="17" src="https://github.com/user-attachments/assets/3e4c9691-db8e-49dc-8701-2029db83dc2d" />
+
+Query 3: Menghitung Jumlah Dokumen Berdasarkan Setiap Status (COUNT & GROUP BY)
+Fungsi: Menyajikan ringkasan statistik total berkas selesai, tertunda, atau ditolak sebagai bahan rekapitulasi berkas.
+<img width="732" height="199" alt="18" src="https://github.com/user-attachments/assets/d9b8737c-f796-4bea-983d-b6eece295b74" />
+
+Query 4: Menampilkan Dokumen yang Ditolak Beserta Alasan Penolakannya
+Fungsi: Memudahkan pengembang sistem memunculkan umpan balik alasan penolakan dokumen di dashboard mahasiswa.
+<img width="861" height="153" alt="19" src="https://github.com/user-attachments/assets/ab7c1017-4b96-440b-8d56-06f87bb49392" />
+
+Query 5: Menampilkan Riwayat Catatan Pemeriksaan Dosen terhadap Berkas Tertentu (Multi-join)
+Fungsi: Melacak rekam jejak penilaian dosen, berkas apa yang diperiksa, dan siapa nama dosen pemeriksanya.
+<img width="1038" height="212" alt="20" src="https://github.com/user-attachments/assets/6e762f6b-1511-4ea5-8003-2e4e57b84732" />
+
+Query 6: Menampilkan Lembar Instruksi Disposisi dari Dekan / Pimpinan
+Fungsi: Menampilkan isi pesan arahan atau lembar instruksi resmi yang dikeluarkan oleh pimpinan fakultas.
+<img width="1095" height="192" alt="21" src="https://github.com/user-attachments/assets/78fc0db5-a896-4ebc-980e-c6d8b2f1a1df" />
+
+Query 7: Rekap Data Mahasiswa yang Akun Loginnya Memiliki Role 'Mahasiswa'
+Fungsi: Memastikan keabsahan hak akses sistem (role autentikasi) terhubung secara akurat dengan data master NIM mahasiswa.
+<img width="718" height="199" alt="22" src="https://github.com/user-attachments/assets/122961a0-e04a-4303-90c4-1d569f48e66c" />
+
+Query 8: Filter Dokumen yang Diunggah pada Rentang Tanggal Tertentu (Tracking Periode)
+Fungsi: Menghasilkan laporan arsip dokumen masuk berdasarkan filter periode (misal: mingguan atau bulanan).
+<img width="679" height="182" alt="23" src="https://github.com/user-attachments/assets/887f2da3-a22a-49e7-aa1a-62e260c6b82d" />
+
+Query 9: Menampilkan Staf TU yang Paling Banyak Memverifikasi Berkas (Kombinasi Aggregate)
+Fungsi: Mengukur beban kerja serta produktivitas kinerja dari masing-masing staf TU dalam mengurus berkas digital prodi.
+<img width="938" height="183" alt="24" src="https://github.com/user-attachments/assets/8454d684-9866-4487-a085-5582d667cdb1" />
+
+Query 10: Mengupdate Status Dokumen Menjadi 'Selesai' Berdasarkan ID Tertentu
+Mensimulasikan pembaruan status data secara riil saat dokumen telah menuntaskan seluruh tahapan disposisi.
+<img width="458" height="89" alt="25" src="https://github.com/user-attachments/assets/bc11aa3c-adc3-4ec5-a314-2cfef2ffc487" />
+
+# Ketentuan 5: Skenario pengujian (UAT - User Acceptance Testing)
+Skenario pengujian ini dirancang untuk mensimulasikan alur kerja nyata pada sistem dan membuktikan bahwa batasan relasi (*constraint*) serta fungsionalitas basis data berjalan dengan sukses tanpa terjadi eror sintaks.
+
+| ID Uji | Fitur / Skenario Pengujian | Langkah Pengujian (Query SQL Penguji) | Hasil yang Diharapkan | Status |
+| :--- | :--- | :--- | :--- | :--- |
+| **UAT-01** | **Autentikasi Relasional Akun** | `SELECT m.nim, m.nama_mahasiswa, u.email, u.role FROM MAHASISWA m INNER JOIN USER u ON m.id_user = u.id_user;` | Sistem menyajikan kecocokan relasi kunci asing (`id_user`) antara data profil mahasiswa dan akun login dengan benar. | Sukses |
+| **UAT-02** | **Pengunggahan Berkas Baru oleh Mahasiswa** | `INSERT INTO DOKUMEN (nama_berkas, no_dokumen, tgl_unggah, status_dokumen, catatan_penolakan, file_path, id_pegawai, nim) VALUES ('Proposal_Skripsi_Yas.pdf', NULL, NOW(), DEFAULT, '-', '/docs/skripsi_yas.pdf', 'P01', '2501020103');` | Data dokumen baru berhasil masuk ke database dengan status default otomatis **'Pending'** dan nomor surat resmi bernilai **`NULL`**. | Sukses |
+| **UAT-03** | **Validasi & Penolakan Berkas oleh Staf TU** | `UPDATE DOKUMEN SET status_dokumen = 'Ditolak', catatan_penolakan = 'Format proposal belum sesuai template prodi' WHERE id_dokumen = 2;` | Status dokumen dengan ID 2 berubah secara dinamis menjadi **'Ditolak'** dan teks alasan penolakan terekam permanen di database. | Sukses |
+| **UAT-04** | **Pemeriksaan & Evaluasi Berkas oleh Dosen** | `INSERT INTO PEMERIKSAAN (id_dokumen, nidn, tgl_periksa, catatan_pemeriksaan) VALUES (1, '0022028903', NOW(), 'Bab 1 perlu diperjelas di bagian metode');` | Catatan evaluasi dosen berhasil ditambahkan ke tabel `PEMERIKSAAN` dan terikat kuat ke identitas fisik dosen (`NIDN`). | Sukses |
+| **UAT-05** | **Lembar Instruksi Disposisi Pimpinan (Dekan)** | `INSERT INTO DISPOSISI (id_dokumen, id_user, tgl_disposisi, instruksi) VALUES (1, 9, NOW(), 'Teruskan ke prodi untuk dijadwalkan seminar');` | Lembar perintah disposisi dari Dekan (`id_user = 9`) berhasil tercatat secara kronologis dalam sistem untuk kelanjutan berkas terkait. | Sukses |
 
 
 
