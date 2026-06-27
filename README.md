@@ -47,54 +47,54 @@ Menghasilkan Query untuk Pelaporan dan Pemantauan Status (Tracking) Membuat peri
 10. Sistem harus dapat membatasi hak akses unduh berkas agar dokumen internal prodi hanya bisa diakses oleh aktor yang berwenang.
 
 # KEBUTUHAN DATA
-### Tabel User
+### Tabel USER
 * `id_user` INT
-* `nama` VARCHAR (50)
-* `email` VARCHAR (50)
-* `password` VARCHAR (50)
+* `nama` VARCHAR (100)
+* `email` VARCHAR (100)
+* `password` VARCHAR (255)
 * `role` VARCHAR (20)
 
-### Tabel Mahasiswa
+### Tabel MAHASISWA
 * `nim` VARCHAR (15)
-* `nama_mahasiswa` VARCHAR (50)
-* `program_studi` VARCHAR (30)
+* `nama_mahasiswa` VARCHAR (100)
+* `prodi` VARCHAR (50)
 * `id_user` INT
 
-### Tabel Dosen
-* `nidn` VARCHAR (15)
-* `nama_dosen` VARCHAR (50)
-* `jabatan` VARCHAR (40)
+### Tabel DOSEN
+* `nidn` VARCHAR (20)
+* `nama_dosen` VARCHAR (100)
+* `jabatan` VARCHAR (50)
 * `id_user` INT
 
-### Tabel Staf TU
+### Tabel STAF_TU
 * `id_pegawai` VARCHAR (15)
-* `nama_pegawai` VARCHAR (50)
+* `nama_pegawai` VARCHAR (100)
 * `id_user` INT
 
-### Tabel Dokumen
+### Tabel DOKUMEN
 * `id_dokumen` INT
-* `nama_berkas` VARCHAR (100)
-* `nomor_dokumen` VARCHAR (40)
-* `tanggal_unggah` DATETIME
+* `nama_berkas` VARCHAR (255)
+* `no_dokumen` VARCHAR (50)
+* `tgl_unggah` DATETIME
 * `status_dokumen` VARCHAR (20)
 * `catatan_penolakan` VARCHAR (200)
-* `file_path` VARCHAR (200)
-* `nim` VARCHAR(15)
-* `id_pegawai` VARCHAR(15)
+* `file_path` VARCHAR (255)
+* `id_pegawai` VARCHAR (15)
+* `nim` VARCHAR (15)
 
-### Tabel Pemeriksaan
+### Tabel PEMERIKSAAN
 * `id_periksa` INT
 * `id_dokumen` INT
-* `nidn` VARCHAR (15)
-* `tanggal_periksa` DATETIME
-* `catatan_hasil_pemeriksaan` VARCHAR (200)
+* `nidn` VARCHAR (20)
+* `tgl_periksa` DATETIME
+* `catatan_pemeriksaan` VARCHAR (200)
 
-### Tabel Disposisi
+### Tabel DISPOSISI
 * `id_disposisi` INT
 * `id_dokumen` INT
 * `id_user` INT
-* `tanggal_disposisi` DATETIME
-* `isi_instruksi_disposisi` VARCHAR (200)
+* `tgl_disposisi` DATETIME
+* `instruksi` VARCHAR (200)
 
 # DIAGRAM PROSES (FLOWCHART)
 <img width="825" height="1600" alt="WhatsApp Image 2026-06-13 at 9 02 38 PM" src="https://github.com/user-attachments/assets/71a90e42-c836-4589-9b91-3288ae45f876" />
@@ -117,84 +117,83 @@ https://github.com/Eyjakurniawan/SISTEM-BASIS-DATA.git
 
 ## Penjelasan Entitas dan Relasi
 1. Entitas Sistem
-* **User (Aktor Utama):** Terbagi menjadi Mahasiswa, Staf TU, dan Dosen (di mana akun Pimpinan seperti Dekan/Kaprodi menggunakan basis data aktor Dosen/User dengan hak akses khusus).
-* **Dokumen / Surat (Objek Data):** Berkas digital yang mengalami perubahan status secara berkala di dalam sistem pengarsipan.
+* **User (Aktor Utama)** Menyimpan data akun autentikasi yang terbagi menjadi tiga peran (role), yaitu Mahasiswa, Staf TU, dan Dosen. Untuk pimpinan seperti Dekan atau Kaprodi, data menggunakan basis entitas Dosen dengan hak akses khusus.
+* **Dokumen / Surat (Objek Data):** Berkas digital yang diunggah oleh mahasiswa dan mengalami perubahan status secara berkala selama proses validasi, pemeriksaan, hingga disposisi.
+* **Pemeriksaan:** Entitas transaksional untuk mencatat hasil evaluasi dan rekam jejak pemeriksaan berkas oleh Dosen
+* **Disposisi:** Entitas transaksional untuk mencatat instruksi dan lembar perintah lanjutan dari Dekan/Kaprodi terhadap dokumen surat masuk.
 
 2. Hubungan Relasi Berdasarkan Alur Aktivitas Flowchart
 Hubungan keterkaitan data antar-aktor dimodelkan melalui urutan aktivitas berikut:
 
 ##### A. Fase Pengajuan (Mahasiswa)
-* **Mahasiswa → Dokumen:** Mahasiswa melakukan otentikasi login untuk mengakses sistem. Mahasiswa memiliki dua opsi relasi terhadap dokumen:
-    * Mengunduh dokumen yang telah tersedia hingga selesai.
-    * Mengunggah berkas pengajuan baru ke database yang otomatis memicu relasi data berupa **Notifikasi Pengajuan Dokumen** ke pihak Staf TU.
+* **User dengan Mahasiswa (Relasi 1:1):** Satu akun user hanya memiliki satu data profil mahasiswa yang sah.
+* **Mahasiswa dengan Dokumen (Relasi 1:N):** Seorang mahasiswa dapat mengunggah banyak dokumen pengajuan berkas ke dalam database. Proses unggah ini otomatis memicu status awal menjadi 'Pending'.
 
 #### B. Fase Validasi & Registrasi (Staf TU)
-* **Staf TU → Dokumen:** Staf TU menerima notifikasi berkas masuk lalu melakukan tindakan **Verifikasi Dokumen**.
-    * *Jika Valid (Ya):* Staf TU melakukan registrasi dengan **Memberikan Nomor Pada Dokumen**, sehingga status objek data berubah menjadi **Dokumen Diterima**.
-    * *Jika Tidak Valid:* Sistem menolak dokumen dan mengembalikan alur data ke Mahasiswa untuk direvisi.
+* **User dengan Staf TU (Relasi 1:1):** Satu akun user hanya terikat pada satu profil pegawai tata usaha.
+* **Staf TU dengan Dokumen (Relasi 1:N):** Seorang staf TU dapat memverifikasi banyak dokumen masuk.
+    * *Jika Tidak Valid:* Staf TU mengubah status dokumen menjadi 'Ditolak' dan wajib menginput alasan pada kolom catatan penolakan.
+    * Jika Valid:* Staf TU mengubah status menjadi 'Diterima' dan melakukan registrasi penomoran resmi pada kolom nomor dokumen.
 
 #### C. Fase Distribusi, Pemeriksaan & Disposisi
-Setelah status berubah menjadi "Dokumen Diterima", basis data membagi relasi menjadi dua alur pemrosesan:
-1.  **Sistem → Dosen:** Menghasilkan **Notifikasi Pada Dosen** untuk melakukan tindakan **Periksa Dokumen**.
-2.  **Sistem → Filter Evaluasi:** Dokumen masuk ke menu keputusan untuk menentukan metode penyelesaian berkas:
-    * *Jalur Pemeriksaan Dokumen Oleh Dosen:* Berkas dialihkan ke status **Dokumen Diperiksa** setelah dosen menginput catatan evaluasi.
-    * *Jalur Disposisi Oleh Dekan/Kaprodi:* Berkas dialihkan ke pimpinan untuk dilakukan **Review Surat Masuk**, kemudian pimpinan menginput data **Memberikan Disposisi pada Dokumen**.
+* **User dengan Dosen (Relasi 1:1):** Satu akun user hanya terikat pada satu profil dosen.
+* **Dokumen dengan Pemeriksaan (Relasi 1:N) & Dosen dengan Pemeriksaan (Relasi 1:N):** Setelah berstatus 'Diterima', berkas didistribusikan ke Dosen terkait. Dosen dapat memeriksa banyak dokumen dan mencatat evaluasinya di tabel Pemeriksaan, yang mengubah status berkas menjadi 'Diperiksa'.
+* **Dokumen dengan Disposisi (Relasi 1:N) & User dengan Disposisi (Relasi 1:N):** Khusus berkas surat masuk pimpinan, Dekan/Kaprodi (menggunakan akun User pimpinan) memberikan lembar instruksi resmi yang datanya disimpan di dalam tabel Disposisi.
 
 #### D. Fase Finalisasi Status
-* **Sistem → Dokumen Final:** Kedua jalur di atas (Pemeriksaan biasa maupun Disposisi) akan bertemu kembali di satu titik akhir yang sama, yaitu mengubah status data menjadi **Dokumen Disetujui**.
-* **Perubahan Akhir:** Sistem melakukan eksekusi perintah terakhir berupa **Ubah Status Selesai / Pending** untuk memperbarui rekam jejak arsip digital sebelum alur proses resmi dinyatakan berakhir (Selesai).
+Setelah melalui jalur Pemeriksaan Dosen atau Disposisi Pimpinan, status akhir objek data pada tabel dokumen akan diperbarui secara dinamis menjadi 'Disetujui' atau 'Selesai', menandakan seluruh rangkaian proses bisnis pengarsipan telah berakhir.
 
 ## Kamus Data (Data Dictionary)
 Kamus data ini menjelaskan secara detail mengenai tipe data, panjang karakter, serta fungsi dari setiap kolom yang digunakan pada rancangan basis data:
 
-### 1. Tabel User (Pengguna)
+### 1. Tabel USER (Pengguna)
 * `id_user` (INT): Kunci utama (Primary Key) untuk mengidentifikasi setiap akun pengguna secara unik.
-* `nama` (VARCHAR, 50): Menyimpan nama lengkap pengguna saat mendaftarkan akun (maksimal 50 karakter).
-* `email` (VARCHAR, 50): Menyimpan alamat email pengguna sebagai identitas unik untuk login.
-* `password` (VARCHAR, 50): Menyimpan kata sandi akun pengguna untuk keamanan login.
-* `role` (VARCHAR, 20): Menentukan peran atau hak akses pengguna di dalam sistem (Mahasiswa / Staf TU / Dosen / Dekan atau Kaprodi).
+* `nama` (VARCHAR, 100): Menyimpan nama lengkap pengguna saat mendaftarkan akun (maksimal 100 karakter).
+* `email` (VARCHAR, 100): Menyimpan alamat email pengguna sebagai identitas unik untuk login.
+* `password` (VARCHAR, 255): Menyimpan kata sandi akun pengguna untuk keamanan login.
+* `role` (VARCHAR, 20): Menentukan peran atau hak akses pengguna di dalam sistem (Mahasiswa / Staf TU / Dosen / Dekan).
 
-### 2. Tabel Mahasiswa
+### 2. Tabel MAHASISWA
 * `nim` (VARCHAR, 15): Kunci utama (Primary Key) berupa Nomor Induk Mahasiswa.
-* `nama_mahasiswa` (VARCHAR, 50): Menyimpan nama lengkap mahasiswa (maksimal 50 karakter).
-* `program_studi` (VARCHAR, 30): Menyimpan nama program studi atau jurusan mahasiswa.
-* `id_user` (INT): Kunci tamu (Foreign Key) yang menghubungkan profil mahasiswa ke akun loginnya di tabel User.
+* `nama_mahasiswa` (VARCHAR, 100): Menyimpan nama lengkap mahasiswa (maksimal 100 karakter).
+* `prodi` (VARCHAR, 50): Menyimpan nama program studi mahasiswa.
+* `id_user` (INT): Kunci tamu (Foreign Key) yang menghubungkan profil mahasiswa ke akun loginnya di tabel USER.
 
-### 3. Tabel Dosen
-* `nidn` (VARCHAR, 15): Kunci utama (Primary Key) berupa Nomor Induk Dosen Nasional atau kode pengenal dosen.
-* `nama_dosen` (VARCHAR, 50): Menyimpan nama lengkap dosen beserta gelar (maksimal 50 karakter).
-* `jabatan` (VARCHAR, 40): Menyimpan jabatan struktural atau fungsional dosen (misal: Dosen Pembimbing, Kaprodi, Dekan).
-* `id_user` (INT): Kunci tamu (Foreign Key) yang menghubungkan profil dosen ke akun loginnya di tabel User.
+### 3. Tabel DOSEN
+* `nidn` (VARCHAR, 20): Kunci utama (Primary Key) berupa Nomor Induk Dosen Nasional atau kode pengenal dosen.
+* `nama_dosen` (VARCHAR, 100): Menyimpan nama lengkap dosen beserta gelar (maksimal 100 karakter).
+* `jabatan` (VARCHAR, 50): Menyimpan jabatan struktural atau fungsional dosen (misal: Dosen, Kaprodi, Dekan).
+* `id_user` (INT): Kunci tamu (Foreign Key) yang menghubungkan profil dosen ke akun loginnya di tabel USER.
 
-### 4. Tabel Staf TU
+### 4. Tabel STAF_TU
 * `id_pegawai` (VARCHAR, 15): Kunci utama (Primary Key) berupa nomor induk atau kode pegawai staf TU.
-* `nama_pegawai` (VARCHAR, 50): Menyimpan nama lengkap staf TU (maksimal 50 karakter).
-* `id_user` (INT): Kunci tamu (Foreign Key) yang menghubungkan profil staf ke akun loginnya di tabel User.
+* `nama_pegawai` (VARCHAR, 100): Menyimpan nama lengkap staf TU (maksimal 100 karakter).
+* `id_user` (INT): Kunci tamu (Foreign Key) yang menghubungkan profil staf ke akun loginnya di tabel USER.
 
-### 5. Tabel Dokumen
+### 5. Tabel DOKUMEN
 * `id_dokumen` (INT): Kunci utama (Primary Key) untuk mengidentifikasi setiap berkas dokumen secara unik.
-* `nama_berkas` (VARCHAR, 100): Menyimpan nama atau judul berkas digital yang diunggah ke dalam sistem.
-* `nomor_dokumen` (VARCHAR, 40): Menyimpan nomor surat resmi yang diberikan oleh staf TU setelah berkas valid.
-* `tanggal_unggah` (DATETIME): Mencatat waktu berupa tanggal dan jam ketika berkas pertama kali diunggah mahasiswa.
-* `status_dokumen` (VARCHAR, 20): Menyimpan status proses terkini dari berkas (Pending / Diterima / Ditolak / Selesai).
+* `nama_berkas` (VARCHAR, 255): Menyimpan nama atau judul berkas digital yang diunggah ke dalam sistem.
+* `no_dokumen` (VARCHAR, 50): Menyimpan nomor surat resmi yang diberikan oleh staf TU setelah berkas valid.
+* `tgl_unggah` (DATETIME): Mencatat waktu berupa tanggal dan jam ketika berkas pertama kali diunggah mahasiswa.
+* `status_dokumen` (VARCHAR, 20): Menyimpan status proses terkini dari berkas (Pending / Diterima / Ditolak / Selesai / Diperiksa / Disetujui).
 * `catatan_penolakan` (VARCHAR, 200): Menyimpan alasan atau catatan dari staf TU jika dokumen ditolak.
-* `file_path` (VARCHAR, 200): Menyimpan jalur direktori atau lokasi penyimpanan file fisik dokumen di server.
+* `file_path` (VARCHAR, 255): Menyimpan jalur direktori atau lokasi penyimpanan file fisik dokumen di server.
+* `id_pegawai` (VARCHAR, 15): Kunci tamu (Foreign Key) yang menghubungkan dokumen dengan staf TU yang memproses atau memverifikasinya.
 * `nim` (VARCHAR, 15): Kunci tamu (Foreign Key) yang menghubungkan dokumen dengan mahasiswa pengunggahnya.
-* `id_pegawai` (VARCHAR, 15): Kunci tamu (Foreign Key) yang menghubungkan dokumen dengan staf TU yang memprosesnya.
 
-### 6. Tabel Pemeriksaan
+### 6. Tabel PEMERIKSAAN
 * `id_periksa` (INT): Kunci utama (Primary Key) untuk mengidentifikasi setiap log riwayat pemeriksaan berkas secara unik.
 * `id_dokumen` (INT): Kunci tamu (Foreign Key) yang merujuk pada berkas dokumen yang sedang diperiksa.
-* `nidn` (VARCHAR, 15): Kunci tamu (Foreign Key) yang merujuk pada dosen yang melakukan pemeriksaan.
-* `tanggal_periksa` (DATETIME): Mencatat waktu berupa tanggal dan jam pelaksanaan pemeriksaan berkas oleh dosen.
-* `catatan_hasil_pemeriksaan` (VARCHAR, 200): Menyimpan komentar, hasil penilaian, atau catatan evaluasi dari dosen.
+* `nidn` (VARCHAR, 20): Kunci tamu (Foreign Key) yang merujuk pada dosen yang melakukan pemeriksaan.
+* `tgl_periksa` (DATETIME): Mencatat waktu berupa tanggal dan jam pelaksanaan pemeriksaan berkas oleh dosen.
+* `catatan_pemeriksaan` (VARCHAR, 200): Menyimpan ulasan, komentar, hasil penilaian, atau catatan evaluasi dari dosen.
 
-### 7. Tabel Disposisi
+### 7. Tabel DISPOSISI
 * `id_disposisi` (INT): Kunci utama (Primary Key) untuk mengidentifikasi setiap lembar instruksi disposisi secara unik.
-* `id_dokumen` (INT): Kunci tamu (Foreign Key) yang merujuk pada dokumen surat masuk yang membutuhkan disposisi.
-* `id_user` (INT): Kunci tamu (Foreign Key) yang merujuk pada pimpinan (Kaprodi/Dekan) yang memberikan instruksi.
-* `tanggal_disposisi` (DATETIME): Mencatat waktu berupa tanggal dan jam pemberian instruksi disposisi oleh pimpinan.
-* `isi_instruksi_disposisi` (VARCHAR, 200): Menyimpan pesan perintah atau teks instruksi lanjutan terkait penanganan berkas.
+* `id_dokumen` (INT): Kunci tamu (Foreign Key) yang merujuk pada dokumen berkas surat masuk yang membutuhkan disposisi.
+* `id_user` (INT): Kunci tamu (Foreign Key) yang merujuk pada pimpinan (Kaprodi/Dekan) yang memberikan instruksi disposisi melalui tabel USER.
+* `tgl_disposisi` (DATETIME): Mencatat waktu berupa tanggal dan jam pemberian instruksi disposisi oleh pimpinan.
+* `instruksi` (VARCHAR, 200): Menyimpan pesan perintah atau teks instruksi lanjutan terkait penanganan berkas oleh pimpinan.
 
 ## Normalisasi UNF → 1NF → 2NF → 3NF
 Normalisasi adalah teknik perancangan basis data yang digunakan untuk menyusun tabel-tabel secara logis guna mengurangi **redudansi** (pengulangan data) dan mencegah **anomali** (kesalahan saat menambah, mengubah, atau menghapus data). Proses ini diibaratkan seperti merapikan lemari pakaian; kita memisahkan kemeja, celana, dan jaket ke dalam laci yang berbeda agar lebih mudah dicari dan tidak memakan tempat secara percuma.
@@ -203,12 +202,12 @@ Normalisasi adalah teknik perancangan basis data yang digunakan untuk menyusun t
 Pada tahap UNF, data dikumpulkan apa adanya dari catatan/rekap manual. Data masih memiliki *repeating group* (satu sel berisi banyak nilai), sel yang digabung (merging), dan format pencatatan yang bertumpuk antara data mahasiswa, dokumen, staf TU yang melayani, hingga dosen pemeriksa.
 
 #### Tabel Rekap Pengajuan Dokumen (Raw Data)
-| NIM | Info Mahasiswa | Info Dokumen (Berkas, No, Tgl, Path) | Status & Catatan Penolakan | Staf TU (ID - Nama) | Dosen Pemeriksa | Catatan Periksa | Disposisi Pimpinan |
+| nim | Info Mahasiswa | Info Dokumen (Berkas, No, Tgl, Path) | Status & Catatan Penolakan | Staf TU (ID - Nama) | Dosen Pemeriksa | Catatan Pemeriksaan | Disposisi Pimpinan |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| 2501020103 | Yazira Sartika (Teknik Informatika) | Surat Izin Observasi Kampung Sei Sudip.pdf, SIO-001, 2026-06-18 09:00, /docs/observasi.pdf | Pending (-) | P01 - Mbak Rini | 0022028903-Ferdi Chahyadi, 9990631627-Nolan Efranda | Tambahkan tujuan, Format sudah oke | 1028087501-Martaleli Bettiza (Setujui segera) |
-| 2501020094 | Eyja Kurniawan (Teknik Informatika) | Proposal Kegiatan Badminton.pdf, -, 2026-06-19 14:30, /docs/badminton.pdf | Ditolak (Revisi RAB) | P02 - Mas Joko | - | - | - |
-| 2501020104 | Raihan Parsa Ahza Hamizan (Teknik Informatika) | Surat Permohonan Cuti.pdf, SC-045, 2026-06-20 10:15, /docs/cuti.pdf | Selesai (-) | P01 - Mbak Rini | 0117099601-Feri Irawan | Sesuai aturan | 1028087501-Martaleli Bettiza (Disetujui) |
-| 2501020108 | Naufal Putra Azjril (Teknik Informatika) | Pengajuan Keringanan UKT.pdf, UKT-012, 2026-06-21 08:00, /docs/ukt.pdf | Diperiksa (-) | P02 - Mas Joko | 7141775676130173-Rifaldi Herikson | Sedang diverifikasi | - |
+| 2501020103 | Yazira Sartika (Teknik Informatika) | Surat_Izin_Observasi.pdf, SIO-001, 2026-06-18 09:00, /docs/sio1.pdf | Pending (-) | P01 - Mbak Rini | 0022028903-Ferdi Chahyadi, 9990631627-Nolan Efranda | Tambahkan tujuan, Format sudah oke | 9-Martaleli Bettiza (Setujui segera) |
+| 2501020094 | Eyja Kurniawan (Teknik Informatika) | Proposal_Badminton.pdf, -, 2026-06-19 14:30, /docs/prop2.pdf | Ditolak (Revisi RAB) | P02 - Mas Joko | - | - | - |
+| 2501020104 | Raihan Parsa (Teknik Informatika) | Surat_Permohonan_Cuti.pdf, SC-045, 2026-06-20 10:15, /docs/cuti3.pdf | Selesai (-) | P01 - Mbak Rini | 0117099601-Feri Irawan | Sesuai aturan | 9-Martaleli Bettiza (Disetujui) |
+| 2501020108 | Naufal Putra (Teknik Informatika) | Keringanan_UKT.pdf, UKT-012, 2026-06-21 08:00, /docs/ukt4.pdf | Diperiksa (-) | P02 - Mas Joko | 7141775676130173-Rifaldi Herikson | Sedang diverifikasi | - |
 
 ---
 
@@ -216,162 +215,134 @@ Pada tahap UNF, data dikumpulkan apa adanya dari catatan/rekap manual. Data masi
 Syarat 1NF adalah setiap atribut harus bernilai **atomik** (tidak ada multi-value atau grup berulang dalam satu sel) dan tidak ada baris yang duplikat. Data pada baris pertama (dokumen observasi Yazira Sartika) yang diperiksa oleh lebih dari satu dosen, dipecah menjadi baris terpisah.
 
 #### Tabel Dokumen 1NF
-| NIM | Nama_Mhs | Prodi | Nama_Berkas | Nomor_Dokumen | Tanggal_Unggah | File_Path | Status_Dokumen | Catatan_Penolakan | ID_Pegawai | Nama_Pegawai | NIDN_Pemeriksa | Nama_Dosen | Catatan_Periksa | ID_Pimpinan | Disposisi |
+| nim | nama_mahasiswa | prodi | nama_berkas | no_dokumen | tgl_unggah | file_path | status_dokumen | catatan_penolakan | id_pegawai | nama_pegawai | nidn | nama_dosen | catatan_pemeriksaan | id_user | instruksi |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| 2501020103 | Yazira Sartika | Teknik Informatika | Surat Izin Observasi Kampung Sei Sudip.pdf | SIO-001 | 2026-06-18 09:00 | /docs/observasi.pdf | Pending | - | P01 | Mbak Rini | 0022028903 | Ferdi Chahyadi, S.Kom., M.Cs | Tambahkan tujuan | 1028087501 | Setujui segera |
-| 2501020103 | Yazira Sartika | Teknik Informatika | Surat Izin Observasi Kampung Sei Sudip.pdf | SIO-001 | 2026-06-18 09:00 | /docs/observasi.pdf | Pending | - | P01 | Mbak Rini | 9990631627 | Nolan Efranda, M.Kom | Format sudah oke | 1028087501 | Setujui segera |
-| 2501020094 | Eyja Kurniawan | Teknik Informatika | Proposal Kegiatan Badminton.pdf | NULL | 2026-06-19 14:30 | /docs/badminton.pdf | Ditolak | Revisi RAB | P02 | Mas Joko | NULL | NULL | NULL | NULL | NULL |
-| 2501020104 | Raihan Parsa Ahza Hamizan | Teknik Informatika | Surat Permohonan Cuti.pdf | SC-045 | 2026-06-20 10:15 | /docs/cuti.pdf | Selesai | - | P01 | Mbak Rini | 0117099601 | Feri Irawan, S.Kom., M.Kom | Sesuai aturan | 1028087501 | Disetujui |
-| 2501020108 | Naufal Putra Azjril | Teknik Informatika | Pengajuan Keringanan UKT.pdf | UKT-012 | 2026-06-21 08:00 | /docs/ukt.pdf | Diperiksa | - | P02 | Mas Joko | 7141775676130173 | Rifaldi Herikson, M.Kom | Sedang diverifikasi | NULL | NULL |
+| 2501020103 | Yazira Sartika | Teknik Informatika | Surat_Izin_Observasi.pdf | SIO-001 | 2026-06-18 09:00 | /docs/sio1.pdf | Pending | - | P01 | Mbak Rini | 0022028903 | Ferdi Chahyadi | Tambahkan tujuan | 9 | Setujui segera |
+| 2501020103 | Yazira Sartika | Teknik Informatika | Surat_Izin_Observasi.pdf | SIO-001 | 2026-06-18 09:00 | /docs/sio1.pdf | Pending | - | P01 | Mbak Rini | 9990631627 | Nolan Efranda | Format sudah oke | 9 | Setujui segera |
+| 2501020094 | Eyja Kurniawan | Teknik Informatika | Proposal_Badminton.pdf | NULL | 2026-06-19 14:30 | /docs/prop2.pdf | Ditolak | Revisi RAB | P02 | Mas Joko | NULL | NULL | NULL | NULL | NULL |
+| 2501020104 | Raihan Parsa | Teknik Informatika | Surat_Permohonan_Cuti.pdf | SC-045 | 2026-06-20 10:15 | /docs/cuti3.pdf | Selesai | - | P01 | Mbak Rini | 0117099601 | Feri Irawan | Sesuai aturan | 9 | Disetujui |
+| 2501020108 | Naufal Putra | Teknik Informatika | Keringanan_UKT.pdf | UKT-012 | 2026-06-21 08:00 | /docs/ukt4.pdf | Diperiksa | - | P02 | Mas Joko | 7141775676130173 | Rifaldi Herikson | Sedang diverifikasi | NULL | NULL |
 
 ---
 
 ### 3. 2NF (Second Normal Form / Bentuk Normal Kedua)
-Syarat 2NF adalah data memenuhi 1NF dan menghilangkan **Partial Dependency** (ketergantungan parsial). Tabel raksasa di 1NF dipisahkan menjadi tabel entitas utama (Master) dan tabel kegiatan (Transaksi).
+Syarat 2NF adalah data memenuhi 1NF dan menghilangkan **Partial Dependency** (ketergantungan parsial). Tabel raksasa di 1NF dipisahkan menjadi tabel struktur entitas (Master) dan tabel kegiatan (Transaksi). Atribut login (`email`, `password`) masih melekat sementara pada tabel profil masing-masing sebelum dibersihkan di tahap berikutnya.
 
-#### A. Tabel Mahasiswa
-| NIM (PK) | Nama_Mhs | Prodi | Email_Login | Password_Login |
+#### A. Tabel Mahasiswa (Struktur 2NF)
+| nim (PK) | nama_mahasiswa | prodi | email | password |
 | :--- | :--- | :--- | :--- | :--- |
 | 2501020103 | Yazira Sartika | Teknik Informatika | yazira@mhs.com | pass123 |
 | 2501020094 | Eyja Kurniawan | Teknik Informatika | eyja@mhs.com | pass456 |
-| 2501020104 | Raihan Parsa Ahza Hamizan | Teknik Informatika | raihan@mhs.com | pass789 |
-| 2501020108 | Naufal Putra Azjril | Teknik Informatika | naufal@mhs.com | pass000 |
+| 2501020104 | Raihan Parsa | Teknik Informatika | raihan@mhs.com | pass789 |
+| 2501020108 | Naufal Putra | Teknik Informatika | naufal@mhs.com | pass000 |
 
-#### B. Tabel Staf TU
-| ID_Pegawai (PK) | Nama_Pegawai | Email_Login | Password_Login |
+#### B. Tabel Staf TU (Struktur 2NF)
+| id_pegawai (PK) | nama_pegawai | email | password |
 | :--- | :--- | :--- | :--- |
 | P01 | Mbak Rini | rini@tu.com | tu123 |
 | P02 | Mas Joko | joko@tu.com | tu456 |
 
-#### C. Tabel Dosen / Pimpinan
-| NIDN (PK) | Nama_Dosen | Jabatan | Email_Login | Password_Login |
+#### C. Tabel Dosen (Struktur 2NF)
+| nidn (PK) | nama_dosen | jabatan | email | password |
 | :--- | :--- | :--- | :--- | :--- |
-| 0022028903 | Ferdi Chahyadi, S.Kom., M.Cs | Dosen | ferdi@dsn.com | dsn002 |
-| 9990631627 | Nolan Efranda, M.Kom | Dosen | nolan@dsn.com | dsn999 |
-| 7141775676130173 | Rifaldi Herikson, M.Kom | Dosen | rifaldi@dsn.com | dsn714 |
-| 0117099601 | Feri Irawan, S.Kom., M.Kom | Dosen | feri@dsn.com | dsn011 |
-| 1028087501 | Martaleli Bettiza, S.Si, M.Sc | Dekan | martaleli@dsn.com | dsn102 |
+| 0022028903 | Ferdi Chahyadi | Dosen | ferdi@dsn.com | dsn002 |
+| 9990631627 | Nolan Efranda | Dosen | nolan@dsn.com | dsn999 |
+| 7141775676130173 | Rifaldi Herikson | Dosen | rifaldi@dsn.com | dsn714 |
+| 0117099601 | Feri Irawan | Dosen | feri@dsn.com | dsn011 |
+| 1028087501 | Martaleli Bettiza | Dekan | martaleli@dsn.com | dsn102 |
 
-#### D. Tabel Dokumen
-| ID_Dokumen (PK) | NIM (FK) | ID_Pegawai (FK) | Nama_Berkas | Nomor_Dokumen | Tanggal_Unggah | Status_Dokumen | Catatan_Penolakan | File_Path |
+#### D. Tabel DOKUMEN
+| id_dokumen (PK) | nama_berkas | no_dokumen | tgl_unggah | status_dokumen | catatan_penolakan | file_path | id_pegawai (FK) | nim (FK) |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| 1 | 2501020103 | P01 | Surat Izin Observasi Kampung Sei Sudip.pdf | SIO-001 | 2026-06-18 09:00 | Pending | - | /docs/observasi.pdf |
-| 2 | 2501020094 | P02 | Proposal Kegiatan Badminton.pdf | NULL | 2026-06-19 14:30 | Ditolak | Revisi RAB | /docs/badminton.pdf |
-| 3 | 2501020104 | P01 | Surat Permohonan Cuti.pdf | SC-045 | 2026-06-20 10:15 | Selesai | - | /docs/cuti.pdf |
-| 4 | 2501020108 | P02 | Pengajuan Keringanan UKT.pdf | UKT-012 | 2026-06-21 08:00 | Diperiksa | - | /docs/ukt.pdf |
+| 1 | Surat_Izin_Observasi.pdf | SIO-001 | 2026-06-18 09:00 | Pending | - | /docs/sio1.pdf | P01 | 2501020103 |
+| 2 | Proposal_Badminton.pdf | NULL | 2026-06-19 14:30 | Ditolak | Revisi RAB | /docs/prop2.pdf | P02 | 2501020094 |
+| 3 | Surat_Permohonan_Cuti.pdf | SC-045 | 2026-06-20 10:15 | Selesai | - | /docs/cuti3.pdf | P01 | 2501020104 |
+| 4 | Keringanan_UKT.pdf | UKT-012 | 2026-06-21 08:00 | Diperiksa | - | /docs/ukt4.pdf | P02 | 2501020108 |
 
-#### E. Tabel Transaksi Lanjutan (Pemeriksaan & Disposisi)
-| ID_Trans (PK) | ID_Dokumen (FK) | NIDN_Pemeriksa (FK) | Catatan_Periksa | ID_Pimpinan (FK) | Disposisi |
+#### E. Tabel Transaksi Gabungan Pemeriksaan & Disposisi
+| id_trans (PK) | id_dokumen (FK) | nidn (FK) | catatan_pemeriksaan | id_user (FK) | instruksi |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| TRX-1 | 1 | 0022028903 | Tambahkan tujuan | 1028087501 | Setujui segera |
-| TRX-2 | 1 | 9990631627 | Format sudah oke | 1028087501 | Setujui segera |
-| TRX-3 | 3 | 0117099601 | Sesuai aturan | 1028087501 | Disetujui |
+| TRX-1 | 1 | 0022028903 | Tambahkan tujuan | 9 | Setujui segera |
+| TRX-2 | 1 | 9990631627 | Format sudah oke | 9 | Setujui segera |
+| TRX-3 | 3 | 0117099601 | Sesuai aturan | 9 | Disetujui |
 | TRX-4 | 4 | 7141775676130173 | Sedang diverifikasi | NULL | NULL |
 
 ---
 
 ### 4. 3NF (Third Normal Form / Bentuk Normal Ketiga)
-Syarat 3NF adalah memenuhi 2NF dan menghilangkan **Transitive Dependency** (ketergantungan transitif). Informasi kredensial login ditarik keluar menjadi satu **Tabel User**. Alur proses setelah dokumen diterima dipisah secara tegas menjadi **Tabel Pemeriksaan** dan **Tabel Disposisi**.
+Syarat 3NF adalah memenuhi 2NF dan menghilangkan **Transitive Dependency** (ketergantungan transitif). Informasi kredensial login ditarik keluar menjadi satu **Tabel USER** terpusat. Alur proses setelah dokumen diterima dipisah secara tegas menjadi **Tabel PEMERIKSAAN** dan **Tabel DISPOSISI** sesuai rancangan ERD final kelompok.
 
-#### 1. Tabel User (Sentralisasi Autentikasi)
+#### 1. Tabel USER (Sentralisasi Autentikasi)
 | id_user (PK) | nama | email | password | role |
 | :--- | :--- | :--- | :--- | :--- |
 | 1 | Yazira Sartika | yazira@mhs.com | pass123 | Mahasiswa |
 | 2 | Eyja Kurniawan | eyja@mhs.com | pass456 | Mahasiswa |
-| 3 | Raihan Parsa Ahza Hamizan | raihan@mhs.com | pass789 | Mahasiswa |
-| 4 | Naufal Putra Azjril | naufal@mhs.com | pass000 | Mahasiswa |
+| 3 | Raihan Parsa | raihan@mhs.com | pass789 | Mahasiswa |
+| 4 | Naufal Putra | naufal@mhs.com | pass000 | Mahasiswa |
 | 5 | Mbak Rini | rini@tu.com | tu123 | Staf TU |
 | 6 | Mas Joko | joko@tu.com | tu456 | Staf TU |
-| 7 | Ferdi Chahyadi, S.Kom., M.Cs | ferdi@dsn.com | dsn002 | Dosen |
-| 8 | Nolan Efranda, M.Kom | nolan@dsn.com | dsn999 | Dosen |
-| 9 | Martaleli Bettiza, S.Si, M.Sc | martaleli@dsn.com | dsn102 | Dekan |
-| 10 | Feri Irawan, S.Kom., M.Kom | feri@dsn.com | dsn011 | Dosen |
-| 11 | Rifaldi Herikson, M.Kom | rifaldi@dsn.com | dsn714 | Dosen |
+| 7 | Ferdi Chahyadi | ferdi@dsn.com | dsn002 | Dosen |
+| 8 | Nolan Efranda | nolan@dsn.com | dsn999 | Dosen |
+| 9 | Martaleli Bettiza | martaleli@dsn.com | dsn102 | Dekan |
+| 10 | Feri Irawan | feri@dsn.com | dsn011 | Dosen |
+| 11 | Rifaldi Herikson | rifaldi@dsn.com | dsn714 | Dosen |
 
-#### 2. Tabel Mahasiswa
-| nim (PK) | nama_mahasiswa | program_studi | id_user (FK) |
+#### 2. Tabel MAHASISWA
+| nim (PK) | nama_mahasiswa | prodi | id_user (FK) |
 | :--- | :--- | :--- | :--- |
 | 2501020103 | Yazira Sartika | Teknik Informatika | 1 |
 | 2501020094 | Eyja Kurniawan | Teknik Informatika | 2 |
-| 2501020104 | Raihan Parsa Ahza Hamizan | Teknik Informatika | 3 |
-| 2501020108 | Naufal Putra Azjril | Teknik Informatika | 4 |
+| 2501020104 | Raihan Parsa | Teknik Informatika | 3 |
+| 2501020108 | Naufal Putra | Teknik Informatika | 4 |
 
-#### 3. Tabel Staf TU
+#### 3. Tabel STAF_TU
 | id_pegawai (PK) | nama_pegawai | id_user (FK) |
 | :--- | :--- | :--- |
 | P01 | Mbak Rini | 5 |
 | P02 | Mas Joko | 6 |
 
-#### 4. Tabel Dosen
+#### 4. Tabel DOSEN
 | nidn (PK) | nama_dosen | jabatan | id_user (FK) |
 | :--- | :--- | :--- | :--- |
-| 0022028903 | Ferdi Chahyadi, S.Kom., M.Cs | Dosen | 7 |
-| 9990631627 | Nolan Efranda, M.Kom | Dosen | 8 |
-| 1028087501 | Martaleli Bettiza, S.Si, M.Sc | Dekan | 9 |
-| 0117099601 | Feri Irawan, S.Kom., M.Kom | Dosen | 10 |
-| 7141775676130173 | Rifaldi Herikson, M.Kom | Dosen | 11 |
+| 0022028903 | Ferdi Chahyadi | Dosen | 7 |
+| 9990631627 | Nolan Efranda | Dosen | 8 |
+| 1028087501 | Martaleli Bettiza | Dekan | 9 |
+| 0117099601 | Feri Irawan | Dosen | 10 |
+| 7141775676130173 | Rifaldi Herikson | Dosen | 11 |
 
-#### 5. Tabel Dokumen (Tabel Utama Objek Berkas)
-| id_dokumen (PK) | nama_berkas | nomor_dokumen | tanggal_unggah | status_dokumen | catatan_penolakan | file_path | nim (FK) | id_pegawai (FK) |
+#### 5. Tabel DOKUMEN (Tabel Utama Objek Berkas)
+| id_dokumen (PK) | nama_berkas | no_dokumen | tgl_unggah | status_dokumen | catatan_penolakan | file_path | id_pegawai (FK) | nim (FK) |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| 1 | Surat Izin Observasi Kampung Sei Sudip.pdf | SIO-001 | 2026-06-18 08:15 | Pending | - | /docs/observasi.pdf | 2501020103 | P01 |
-| 2 | Proposal Kegiatan Badminton.pdf | NULL | 2026-06-19 07:00 | Ditolak | Revisi RAB | /docs/badminton.pdf | 2501020094 | P02 |
-| 3 | Surat Permohonan Cuti.pdf | SC-045 | 2026-06-20 07:30 | Selesai | - | /docs/cuti.pdf | 2501020104 | P01 |
-| 4 | Pengajuan Keringanan UKT.pdf | UKT-012 | 2026-06-21 08:00 | Diperiksa | - | /docs/ukt.pdf | 2501020108 | P02 |
+| 1 | Surat_Izin_Observasi.pdf | SIO-001 | 2026-06-18 09:00 | Pending | - | /docs/sio1.pdf | P01 | 2501020103 |
+| 2 | Proposal_Badminton.pdf | NULL | 2026-06-19 14:30 | Ditolak | Revisi RAB | /docs/prop2.pdf | P02 | 2501020094 |
+| 3 | Surat_Permohonan_Cuti.pdf | SC-045 | 2026-06-20 10:15 | Selesai | - | /docs/cuti3.pdf | P01 | 2501020104 |
+| 4 | Keringanan_UKT.pdf | UKT-012 | 2026-06-21 08:00 | Diperiksa | - | /docs/ukt4.pdf | P02 | 2501020108 |
 
-#### 6. Tabel Pemeriksaan
-| id_periksa (PK) | id_dokumen (FK) | nidn (FK) | tanggal_periksa | catatan_hasil_pemeriksaan |
+#### 6. Tabel PEMERIKSAAN
+| id_periksa (PK) | id_dokumen (FK) | nidn (FK) | tgl_periksa | catatan_pemeriksaan |
 | :--- | :--- | :--- | :--- | :--- |
 | 1 | 1 | 0022028903 | 2026-06-18 10:00 | Tambahkan tujuan |
-| 2 | 1 | 9990631627 | 2026-06-18 09:30 | Format sudah oke |
-| 3 | 3 | 0117099601 | 2026-06-20 09:00 | Sesuai aturan |
+| 2 | 1 | 9990631627 | 2026-06-18 11:30 | Format sudah oke |
+| 3 | 3 | 0117099601 | 2026-06-20 13:00 | Sesuai aturan |
 | 4 | 4 | 7141775676130173 | 2026-06-21 10:30 | Sedang diverifikasi |
 
-#### 7. Tabel Disposisi
-| id_disposisi (PK) | id_dokumen (FK) | id_user (FK) | tanggal_disposisi | isi_instruksi_disposisi |
+#### 7. Tabel DISPOSISI
+| id_disposisi (PK) | id_dokumen (FK) | id_user (FK) | tgl_disposisi | instruksi |
 | :--- | :--- | :--- | :--- | :--- |
 | 1 | 1 | 9 | 2026-06-19 14:30 | Setujui segera |
 | 2 | 3 | 9 | 2026-06-21 14:00 | Disetujui |
 
 **Catatan Penting Perubahan Relasi Pimpinan (2NF ke 3NF):**
-Jika diperhatikan, pada tahap **2NF** Tabel Disposisi menggunakan `NIDN` sebagai relasi penunjuk Pimpinan, namun pada tahap **3NF** berubah menjadi `id_user`.
+Jika diperhatikan, sejak pemisahan tabel transaksi, relasi penstrukturan pimpinan pada Disposisi diarahkan langsung menuju id_user dan bukan NIDN fisik dosen.
 
 **Alasan Perubahan Struktur:**
 1. **Penerapan Aturan Ketat 3NF:** Untuk menghilangkan *Transitive Dependency*, seluruh data kredensial login (`email`, `password`, `role`) mahasiswa, staf TU, maupun dosen ditarik keluar dari tabel profil masing-masing dan disatukan secara terpusat ke dalam **Tabel User**.
 2. **Otorisasi Aksi pada Aplikasi:** Tindakan *"Memberikan Disposisi"* di dalam sistem digital merupakan sebuah aksi otorisasi yang melekat pada **Akun Login (User)** yang sedang aktif di aplikasi (siapa yang menekan tombol setuju), bukan melekat pada identitas fisik akademik dosen (`NIDN`). Oleh karena itu, Tabel Disposisi dihubungkan langsung ke `id_user` pada Tabel User untuk memastikan bahwa aktor yang mengeksekusi perintah tersebut memiliki hak akses (*role*) yang sah sebagai Dekan/Pimpinan.
-
 ---
 
 # PROGRESS 3: IMPLEMENTASI DATABASE DAN PENGUJIAN
 
-## Ketentuan 1 dan 2: Script DDL dan Constraints (PK, FK, UNIQUE, NOT NULL)
-<img width="635" height="542" alt="1" src="https://github.com/user-attachments/assets/331c24a5-e2e5-4966-b6d9-505136178860" />
-<img width="749" height="90" alt="2" src="https://github.com/user-attachments/assets/13727edc-ce4f-493c-ac43-aaae3ad887a0" />
-<img width="976" height="501" alt="3" src="https://github.com/user-attachments/assets/7a1ec9a0-4ddf-42c4-8530-b15cf79c341d" />
-<img width="1063" height="688" alt="4" src="https://github.com/user-attachments/assets/bd7c2250-5792-483e-8feb-a1f653464d84" />
-<img width="1081" height="214" alt="5" src="https://github.com/user-attachments/assets/bb2ebf4b-6694-43d5-8e6e-eb3016f26563" />
 
-## Ketentuan 3: Data Uji
-<img width="1049" height="370" alt="6" src="https://github.com/user-attachments/assets/a9d3a9a5-1366-4941-ae80-9fd9efaefb39" />
-<img width="1342" height="600" alt="7" src="https://github.com/user-attachments/assets/04c06b40-1d87-4ae1-8ac9-493fe861bd4a" />
-
-## Ketentuan 4: 10 Query SQL
-<img width="1015" height="601" alt="8" src="https://github.com/user-attachments/assets/f9bb2ab8-23db-4317-b2c3-04a815be995d" />
-<img width="1348" height="620" alt="9" src="https://github.com/user-attachments/assets/20147533-f136-496f-bd16-b92ad9799533" />
-<img width="1054" height="665" alt="10" src="https://github.com/user-attachments/assets/b37eb39c-0e0c-471c-8851-73c91ff7d546" />
-
-## Skenario Pengujian
-Skenario 1: Pengujian Validasi Keamanan Registrasi Akun (Constraint Unique)
-<img width="1262" height="91" alt="11" src="https://github.com/user-attachments/assets/77c34666-bb1b-46cc-b932-eb94bc09fb4a" />
-- Tujuan Pengujian: Memastikan sistem database menolak pendaftaran akun baru jika menggunakan alamat email yang sudah terdaftar di sistem
-- Hasil Pengujian: Proses ditolak oleh MySQL dengan pesan: ERROR 1062 (23000): Duplicate entry 'yazira@mhs.com' for key 'unique_email'
-- Kesimpulan: BERHASIL. Aturan pembatasan data unik email berjalan dengan baik
-
-Skenario 2 Skenario 2: Pengujian Alur Validasi Perubahan Status Berkas (DML Update)
-<img width="1216" height="138" alt="Screenshot (560)" src="https://github.com/user-attachments/assets/6c9db26b-2126-4ae7-9ac9-0bc8862186ea" />
-- Tujuan Pengujian: Mensimulasikan aktivitas operasional Staf TU saat memverifikasi dokumen masuk, mengubah status berkas menjadi Diperiksa serta menerbitkan nomor surat resminya
-- Hasil Pengujian: Kolom data ter-update dengan sempurna, status berubah menjadi 'Diperiksa' tanpa memicu galat
-- Kesimpulan: BERHASIL. Fungsi manipulasi siklus dokumen berjalan normal.
 
 # PROGRESS 4: LAPORAN AKHIR
 
